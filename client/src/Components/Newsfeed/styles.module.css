@@ -1,0 +1,7 @@
+.container {
+    display: grid;
+    grid-gap: 20px;
+
+    width: 100%;
+    max-width: var(--max-post-width);
+}

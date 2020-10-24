@@ -1,0 +1,79 @@
+.container {
+    display: grid;
+    grid-template-rows: max-content auto max-content;
+    
+    width: 100%;
+    max-width: var(--max-post-width);
+    height: var(--max-post-height);
+    
+    background-color: #ECF1F1;
+    border-radius: 8px;
+    padding: .97em;
+}
+
+.headerRow {
+    display: grid;
+    grid-template-columns: [userImage] max-content [name] auto [time] max-content;
+    align-items: center;
+}
+
+.contentRow {
+    margin-top: .5em;
+}
+
+.footerRow {
+    display: grid; 
+    grid-template-columns: 1% [likes] max-content auto [shares] max-content auto [replies] max-content 30%;
+    align-items: center;
+    color: #999999;
+}
+
+.footerRow > span {
+    display: grid;
+    grid-template-columns: max-content max-content;
+    align-items: center;
+}
+
+.footerRow > span > span:nth-child(2) {
+    margin-left: .5em;
+}
+
+.footerIcon {
+    font-size: 1.2em;
+}
+
+.likesDisplay {
+    grid-area: likes;
+}
+
+.sharesDisplay {
+    grid-area: shares;
+}
+
+.repliesDisplay {
+    grid-area: replies;
+}
+
+.userImageDisplay {
+    grid-area: userImage;
+    border-radius: 400px;
+    width: 40px;
+    height: 40px;
+}
+
+.nameDisplay {
+    grid-area: name;
+    margin-left: .5em;
+}
+
+.timeDisplay {
+    grid-area: time;
+    color: #999999;
+}
+
+.userHandle {
+    color: #999999;
+}
+
+
+

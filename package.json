@@ -1,0 +1,18 @@
+{
+  "name": "twidr",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "init": "concurrently 'cd client && npm install' 'cd server && npm install'",
+    "start": "concurrently 'cd client && npm start' 'cd server && npm run start-dev'"
+  },
+  "author": "Rick Chou",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^5.2.0"
+  },
+  "dependencies": {
+    "moment": "^2.29.1"
+  }
+}

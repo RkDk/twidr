@@ -1,0 +1,42 @@
+.container {
+    display: grid;
+    background-color: #709AD8;
+    color: #FFFFFF;
+    padding: .45em;
+}  
+
+.containerRegularSize {
+    justify-content: center;
+    grid-template-columns: 25% 35% 20%;
+}
+
+@media (max-width:700px){
+    .containerSmallSize {
+        justify-content: left;
+        grid-template-columns: 25% 50% 25%;
+    }
+    .userActionsSmallSize {
+        margin-right: 10%;
+    }
+}
+
+.logo {
+    justify-self: center;
+    font-weight: bold;
+    font-size: 26px;
+}
+
+.search {
+    width: 100%;
+}
+
+.userActions {
+    display: grid;
+    grid-template-columns: max-content max-content;
+    justify-self: right;
+    align-items: center;
+}
+
+.userActions > span:not(:first-child) {
+    margin-left: .97em;
+}

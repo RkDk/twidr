@@ -1,0 +1,43 @@
+.container {
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: max-content auto;
+}
+
+.content {
+    display: grid;
+    grid-template-rows: auto;
+    padding-top: 2em;
+    grid-gap: 1.3em;
+}
+
+.contentRegularSize {
+    grid-template-columns: 25% 40% 15%;
+    justify-content: center;
+}
+
+.newsFeedRegularSize {
+    width: 100%;
+}
+
+@media (max-width:700px){
+    .contentSmallSize {
+        grid-template-columns: 100%;
+        justify-items: center
+    }
+    .newsFeedSmallSize {
+        display: grid;
+        width: 80%;
+        justify-items: center;
+    }
+}
+
+.userBio {
+    justify-self: center;
+}
+
+.sidePanels {
+    display: grid;
+    grid-template-rows: max-content max-content;
+    grid-gap: 1em;
+}
