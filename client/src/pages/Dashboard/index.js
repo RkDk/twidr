@@ -8,23 +8,16 @@ import TrendingPanel from '../../components/TrendingPanel';
 import RecommendedPanel from '../../components/RecommendedPanel';
 
 import styles from './styles.module.css';
+import UserContext from '../../context/UserContext';
 
 class Dashboard extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {};
-  }
-
-  async componentDidMount() {
-    const user = await ApiService.getCurrentUser();
-    this.setState( {
-      user
-    } ); 
   }
 
   render() {
-    const { profileImage, fullName, userHandle, bio } = this.state?.user || {};
+    const { profileImage, fullName, userHandle, bio } = this.context?.user || {};
     return (
       <div className={styles.container}>
           <Navbar/>
@@ -47,5 +40,7 @@ class Dashboard extends React.Component {
     );
   }
 }
+
+Dashboard.contextType = UserContext;
 
 export default Dashboard;
