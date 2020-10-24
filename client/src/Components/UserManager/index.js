@@ -1,6 +1,6 @@
 import React from 'react';
-import UserContext, { defaultUser } from '../../Context/UserContext';
-import ApiService from '../../Services/ApiService';
+import UserContext, { defaultUser } from '../../context/UserContext';
+import ApiService from '../../services/ApiService';
 
 class UserManager extends React.Component {
     constructor(props) {

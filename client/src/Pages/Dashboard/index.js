@@ -1,11 +1,11 @@
 import React from 'react';
-import ApiService from '../../Services/ApiService';
+import ApiService from '../../services/ApiService';
 
-import Navbar from '../../Components/Navbar';
-import ProfileBioPanel from '../../Components/ProfileBioPanel';
-import Newsfeed from '../../Components/Newsfeed';
-import TrendingPanel from '../../Components/TrendingPanel';
-import RecommendedPanel from '../../Components/RecommendedPanel';
+import Navbar from '../../components/Navbar';
+import ProfileBioPanel from '../../components/ProfileBioPanel';
+import Newsfeed from '../../components/Newsfeed';
+import TrendingPanel from '../../components/TrendingPanel';
+import RecommendedPanel from '../../components/RecommendedPanel';
 
 import styles from './styles.module.css';
 

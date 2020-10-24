@@ -1,4 +1,3 @@
-import { render } from '@testing-library/react';
 import React, { useContext, useEffect, useState } from 'react';
 import {
   BrowserRouter as Router,
@@ -7,13 +6,12 @@ import {
   Redirect
 } from "react-router-dom";
 
-import UserContext, { defaultUser } from '../../Context/UserContext';
-import ApiService from '../../Services/ApiService';
+import UserContext, { defaultUser } from '../../context/UserContext';
 import UserManager from '../UserManager';
 
-import Dashboard from '../../Pages/Dashboard';
-import Login from '../../Pages/Login';
-import UnknownPage from '../../Pages/UnknownPage';
+import Dashboard from '../../pages/Dashboard';
+import Login from '../../pages/Login';
+import UnknownPage from '../../pages/UnknownPage';
 
 function PrivateComponent(props) {
   const userContext = useContext( UserContext );
@@ -57,10 +55,10 @@ class App extends React.Component {
             <PrivateRoute exact path="/">
               <Dashboard/>
             </PrivateRoute>
-            <Route path="/login">
-              <Login/>
-            </Route>
           </UserManager>
+          <Route path="/login">
+              <Login/>
+          </Route>
           <UnknownPage/>
         </Switch>
       </Router>

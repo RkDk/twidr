@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import ApiService from '../../Services/ApiService';
+import ApiService from '../../services/ApiService';
 import Post from '../Post';
 import styles from './styles.module.css';
 
