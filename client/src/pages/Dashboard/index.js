@@ -22,7 +22,7 @@ class Dashboard extends React.Component {
       <div className={styles.container}>
           <Navbar/>
           <div className={[styles.content, styles.contentSmallSize, styles.contentRegularSize].join(' ')}>
-            { this.state.user && (
+            { this.context?.user && (
                 <div className={styles.userBio}>
                   <ProfileBioPanel user={{ profileImage, fullName, userHandle, bio }}/>
                 </div>

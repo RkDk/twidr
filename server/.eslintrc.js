@@ -8,9 +8,10 @@ module.exports = {
     'standard'
   ],
   parserOptions: {
-    ecmaVersion: 11
+    ecmaVersion: 2020
   },
   rules: {
-    semi: [2, 'always']
+    semi: [2, 'always'],
+    'space-before-function-paren': ['error', 'never']
   }
 };

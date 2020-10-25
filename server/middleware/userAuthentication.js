@@ -1,7 +1,7 @@
 const UserService = require('../services/UserService');
 const debug = require('debug')('twidr:middleware/userAuthentication');
 
-module.exports = async (request, response, next) => {
+module.exports = async(request, response, next) => {
   try {
     const { sessionId = '1-abc' } = request.cookies;
 
