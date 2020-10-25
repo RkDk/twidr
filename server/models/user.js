@@ -28,7 +28,7 @@ class User extends BaseModel {
   static get modifiers() {
     return {
       defaultSelects(builder) {
-        builder.select('name', 'handle').withGraphFetched('profileImage(selectUrl)');
+        builder.select('id', 'name', 'handle').withGraphFetched('profileImage(selectUrl)');
       }
     };
   }

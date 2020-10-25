@@ -7,15 +7,15 @@ function Newsfeed() {
   const [posts, setPosts] = useState([]);
   useEffect(() => {
     ApiService.getNewsfeedPosts()
-      .then( posts => {
-        setPosts(posts.sort(( b, a ) => a.post.timestamp - b.post.timestamp));
+      .then((posts) => {
+        setPosts(posts.sort(( b, a ) => +new Date(a.post.createdAt) - +new Date(b.post.createdAt)));
       });
   }, []);
   return (
     <div className={styles.container}>
-      {posts.map(({post,author}, index) => {
+      {posts.map(({post,user}, index) => {
         return (
-          <Post key={index} post={post} author={author}/>
+          <Post key={index} post={post} user={user}/>
         );
       })}
     </div>

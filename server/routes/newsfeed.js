@@ -3,7 +3,11 @@ const router = express.Router();
 const Post = require('../models/Post');
 
 router.get('/', async(request, response) => {
-  const posts = await Post.query().modify('defaultSelects');
+  const posts =
+    await Post
+      .query()
+      .modify('defaultSelects')
+      .modify('aggregateUsers');
   response.status(200).json(posts);
 });
 

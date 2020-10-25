@@ -4,14 +4,14 @@ import Utils from '../../utils';
 import { Heart, Share, ChatRightText } from 'react-bootstrap-icons';
 
 function Post(props) {
-  const { author, post } = props;
+  const { user, post } = props;
   const { likes, shares, replies } = post.metrics;
   return (
     <div className={styles.container}>
       <div className={styles.headerRow}>
-        <img className={styles.userImageDisplay} src={author.userImage}/>
-        <div className={styles.nameDisplay}>{author.displayName}<span className={styles.userHandle}> @{author.userHandle}</span></div>
-        <div className={styles.timeDisplay}>{Utils.formatDateTime(post.timestamp)}</div>
+        <img className={styles.userImageDisplay} src={user.profileImage.url}/>
+        <div className={styles.nameDisplay}>{user.name}<span className={styles.userHandle}> @{user.handle}</span></div>
+        <div className={styles.timeDisplay}>{Utils.formatDateTime(post.createdAt)}</div>
       </div>
       <div className={styles.contentRow}>{post.content}</div>
       <div className={styles.footerRow}>

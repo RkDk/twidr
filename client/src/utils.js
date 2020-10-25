@@ -9,7 +9,7 @@ class Utils {
         };
     }
     static formatDateTime (timestamp) {
-        const now = moment.now();
+        const now = moment().local();
         const date = moment.utc(timestamp).local();
         const diff = +moment.duration(moment(now).startOf('day').diff(moment(date).startOf('day'))).asDays();    
         const timeStr = date.format('LT');

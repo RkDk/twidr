@@ -14,7 +14,7 @@ class Image extends Model {
   }
 
   get url() {
-    return 'http://localhost:3000/'.concat(this.path);
+    return this.path.substring(0, 4) === 'http' ? this.path : 'http://localhost:3000/'.concat(this.path);
   }
 
   static get jsonSchema() {
@@ -33,7 +33,9 @@ class Image extends Model {
       selectUrl(builder) {
         builder.select('path').runAfter(result => {
           if (result.length) {
-            result[0].onlyUrl = true;
+            result.forEach(v => {
+              v.onlyUrl = true;
+            });
           }
         });
       }

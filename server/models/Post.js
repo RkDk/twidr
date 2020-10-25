@@ -2,6 +2,7 @@ const { Model } = require('objection');
 const BaseModel = require('./BaseModel');
 const PostMetric = require('./PostMetric');
 const User = require('./User');
+const _ = require('lodash');
 
 class Post extends BaseModel {
   static get tableName() {
@@ -29,7 +30,21 @@ class Post extends BaseModel {
   static get modifiers() {
     return {
       defaultSelects(builder) {
-        builder.select('content', 'createdAt').withGraphFetched('[user(defaultSelects),metrics(defaultSelects)]');
+        builder
+          .select('content', 'createdAt', 'userId')
+          .withGraphFetched('[user(defaultSelects),metrics(defaultSelects)]');
+      },
+      aggregateUsers(builder) {
+        builder.runAfter(response => {
+          const users = [];
+          const posts = response.map(post => {
+            if (!users.some(({ id }) => id === post.userId)) {
+              users.push(post.user);
+            }
+            return _.omit(post, 'user');
+          });
+          return { users, posts };
+        });
       }
     };
   }

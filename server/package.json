@@ -22,8 +22,8 @@
   "dependencies": {
     "cookie-parser": "^1.4.5",
     "express": "^4.17.1",
-    "jwks-rsa": "^1.8.1",
     "knex": "^0.21.4",
+    "lodash": "^4.17.20",
     "objection": "^2.2.2",
     "pg": "^8.3.0",
     "request": "^2.88.2",

@@ -5,8 +5,8 @@ function parseNewsfeed( data ) {
     const { users, posts } = data;
     return posts.map( post => {
         return {
-            author: users.find(({id}) => id === post.userId),
-            post: post.post
+            user: users.find(({id}) => id === post.userId),
+            post
         };
     } );
 }
