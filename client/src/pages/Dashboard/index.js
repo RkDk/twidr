@@ -17,14 +17,13 @@ class Dashboard extends React.Component {
   }
 
   render() {
-    const { profileImage, fullName, userHandle, bio } = this.context?.user || {};
     return (
       <div className={styles.container}>
           <Navbar/>
           <div className={[styles.content, styles.contentSmallSize, styles.contentRegularSize].join(' ')}>
             { this.context?.user && (
                 <div className={styles.userBio}>
-                  <ProfileBioPanel user={{ profileImage, fullName, userHandle, bio }}/>
+                  <ProfileBioPanel/>
                 </div>
               )
             }

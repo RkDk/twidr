@@ -12,13 +12,13 @@ class PostMetric extends BaseModel {
   static get jsonSchema() {
     return {
       type: 'object',
-      required: ['postId', 'likes', 'shares', 'replies'],
+      required: ['postId'],
       properties: {
-        id: { type: 'integer' },
+        id: { type: 'integer', readOnly: true },
         postId: { type: 'integer' },
-        likes: { type: 'integer' },
-        shares: { type: 'integer' },
-        replies: { type: 'integer' }
+        likes: { type: 'integer', minimum: 0 },
+        shares: { type: 'integer', minimum: 0 },
+        replies: { type: 'integer', minimum: 0 }
       }
     };
   }

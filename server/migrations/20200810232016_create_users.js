@@ -5,8 +5,9 @@ exports.up = async function(knex) {
   }
   await knex.schema.createTable('users', table => {
     table.increments('id').primary();
-    table.string('name');
-    table.string('handle');
+    table.string('name').notNullable();
+    table.string('handle').notNullable();
+    table.string('bio');
     table.integer('imageId').unsigned();
     table.timestamp('createdAt', { useTz: false }).defaultTo(knex.fn.now());
     table.timestamp('updatedAt', { useTz: false }).defaultTo(knex.fn.now());

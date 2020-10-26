@@ -16,11 +16,12 @@ class User extends BaseModel {
       type: 'object',
       required: ['name', 'handle'],
       properties: {
-        id: { type: 'integer' },
-        handle: { type: 'string' },
-        name: { type: 'string' },
+        id: { type: 'integer', readOnly: true },
+        handle: { type: 'string', minLength: 4, maxLength: 255 },
+        name: { type: 'string', minLength: 4, maxLength: 255 },
+        bio: { type: 'string', maxLength: 255 },
         imageId: { type: 'integer' },
-        updatedAt: { type: 'timestamp' }
+        updatedAt: { type: 'timestamp', readOnly: true }
       }
     };
   }
@@ -28,7 +29,7 @@ class User extends BaseModel {
   static get modifiers() {
     return {
       defaultSelects(builder) {
-        builder.select('id', 'name', 'handle').withGraphFetched('profileImage(selectUrl)');
+        builder.select('id', 'name', 'bio', 'handle').withGraphFetched('profileImage(selectUrl)');
       }
     };
   }

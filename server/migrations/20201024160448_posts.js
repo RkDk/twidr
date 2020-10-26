@@ -6,7 +6,7 @@ exports.up = async function(knex) {
   await knex.schema.createTable('posts', table => {
     table.increments('id').primary();
     table.integer('userId').unsigned().notNullable();
-    table.string('content');
+    table.string('content').notNullable();
     table.timestamp('createdAt', { useTz: false }).defaultTo(knex.fn.now());
     table.timestamp('updatedAt', { useTz: false }).defaultTo(knex.fn.now());
     table.foreign('userId').references('users.id');

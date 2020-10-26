@@ -20,9 +20,9 @@ class Image extends Model {
   static get jsonSchema() {
     return {
       type: 'object',
-      required: ['name'],
+      required: ['path'],
       properties: {
-        id: { type: 'integer' },
+        id: { type: 'integer', readOnly: true },
         path: { type: 'string' }
       }
     };

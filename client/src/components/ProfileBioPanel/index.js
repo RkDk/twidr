@@ -1,14 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import UserContext from '../../context/UserContext';
 import styles from './styles.module.css';
 
 function ProfileBioPanel(props) {
-  const { profileImage, fullName, userHandle, bio } = props.user;
-  return (
+  const {user} = useContext(UserContext);
+  return user && (
     <div>
-      <img className={styles.profileImage} src={profileImage}/>
-      <div className={styles.fullName}>{fullName}</div>
-      <div className={styles.userHandle}>@{userHandle}</div>
-      <div className={styles.userBio}>{bio}</div>
+      { user.profileImage && <img className={styles.profileImage} src={user.profileImage.url}/> }
+      <div className={styles.fullName}>{user.name}</div>
+      <div className={styles.userHandle}>@{user.handle}</div>
+      { user.bio && <div className={styles.userBio}>{user.bio}</div> }
     </div>
   );
 }

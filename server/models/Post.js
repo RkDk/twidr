@@ -18,11 +18,11 @@ class Post extends BaseModel {
       type: 'object',
       required: ['userId', 'content'],
       properties: {
-        id: { type: 'integer' },
+        id: { type: 'integer', readOnly: true },
         userId: { type: 'integer' },
-        content: { type: 'string' },
-        createdAt: { type: 'timestamp' },
-        updatedAt: { type: 'timestamp' }
+        content: { type: 'string', minLength: 1, maxLength: 255 },
+        createdAt: { type: 'timestamp', readOnly: true },
+        updatedAt: { type: 'timestamp', readOnly: true }
       }
     };
   }
