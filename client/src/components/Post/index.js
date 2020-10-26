@@ -13,7 +13,7 @@ function Post(props) {
         <div className={styles.nameDisplay}>{user.name}<span className={styles.userHandle}> @{user.handle}</span></div>
         <div className={styles.timeDisplay}>{Utils.formatDateTime(post.createdAt)}</div>
       </div>
-      <div className={styles.contentRow}>{post.content}</div>
+      <div className={styles.contentRow}>{post.content.substring(0,100)}{post.content.length>100 && <>...</> }</div>
       <div className={styles.footerRow}>
         <span className={styles.likesDisplay}>
           <Heart className={styles.footerIcon}/><span>{likes}</span>
