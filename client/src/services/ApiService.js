@@ -12,8 +12,8 @@ function parseNewsfeed( data ) {
 }
 
 class ApiService {
-    static async getNewsfeedPosts() {
-        const options = Utils.axiosOptions( '/newsfeed', {
+    static async getNewsfeedPosts(limit,offset) {
+        const options = Utils.axiosOptions( `/newsfeed?limit=${limit}${offset? '&offset='.concat(offset) : ''}`, {
             method: 'GET'
         } );
         return axios( options ).then(({data})=> parseNewsfeed(data));

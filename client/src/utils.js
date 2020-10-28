@@ -1,4 +1,4 @@
-
+import Constants from './constants';
 import moment from 'moment';
 
 class Utils {
@@ -25,6 +25,17 @@ class Utils {
             dateStr = date.format(dateFormat);
         }
         return `${dateStr} ${timeStr}`;
+    }
+    static getElementTop(el) {
+        let top = 0;
+        while(el) {
+            top += el.offsetTop;
+            el = el.offsetParent;
+        }
+        return top;
+    }
+    static getDocumentScrollPercentage() {
+        return ( window.pageYOffset + Constants.ViewportHeight ) / document.documentElement.scrollHeight;
     }
 }
 
