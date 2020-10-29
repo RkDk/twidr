@@ -4,10 +4,10 @@ import Utils from '../../utils';
 import { Heart, Share, ChatRightText } from 'react-bootstrap-icons';
 
 function Post(props) {
-  const { user, post } = props;
+  const { user, post, style } = props;
   const { likes, shares, replies } = post.metrics;
   return (
-    <div className={styles.container}>
+    <div className={styles.container} style={style}>
       <div className={styles.headerRow}>
         <img className={styles.userImageDisplay} src={user.profileImage.url}/>
         <div className={styles.nameDisplay}>{user.name}<span className={styles.userHandle}> @{user.handle}</span></div>

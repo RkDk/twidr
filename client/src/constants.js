@@ -1,6 +1,8 @@
 
 const Constants = {
-    ViewportHeight: Math.max(document?.documentElement?.clientHeight || 0, window?.innerHeight || 0)
+    MIN_DELAY_BETWEEN_NEWSFEED_FETCH: 700,
+    MAX_DELAY_BETWEEN_NEWSFEED_FETCH: 2000,
+    NEWSFEED_FETCH_COUNT: 5
 };
 
 export default Constants;

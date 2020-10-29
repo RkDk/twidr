@@ -34,8 +34,11 @@ class Utils {
         }
         return top;
     }
+    static getViewportHeight() {
+        return document.documentElement.clientHeight;
+    }
     static getDocumentScrollPercentage() {
-        return ( window.pageYOffset + Constants.ViewportHeight ) / document.documentElement.scrollHeight;
+        return ( window.pageYOffset + document.documentElement.clientHeight ) / document.documentElement.scrollHeight;
     }
 }
 

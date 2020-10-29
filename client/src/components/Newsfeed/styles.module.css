@@ -1,13 +1,27 @@
 .container {
     display: grid;
-    grid-gap: 20px;
-
     width: 100%;
     max-width: var(--max-post-width);
+    padding-bottom: 2em;
+}
 
-    padding-bottom: 3em;
+.postList {
+    display: grid;
+    grid-gap: 20px;
+    padding-bottom: 1em;
 }
 
 .footer {
     justify-self: center;
+}
+
+.postEntering {
+    opacity: 0;
+    transform: translateY(50%);
+}
+
+.postActive {
+    opacity: 1;
+    transform: translateY(0%);
+    transition: transform 200ms, opacity 500ms;
 }
