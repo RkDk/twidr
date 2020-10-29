@@ -1,0 +1,70 @@
+.container {
+    display: grid;
+
+    width: 100%;
+    max-width: var(--max-post-width);
+
+    background-color: #ECF1F1;
+    border-radius: 8px;
+    padding: 0px;
+    margin-bottom: 20px;
+}
+
+.containerFull {
+    grid-template-rows: auto;
+}
+
+.containerSplit {
+    grid-template-rows: 50% 50%;
+}
+
+.inputTextArea {
+    resize: none;
+}
+
+.inputTextArea:focus {
+    outline: none !important;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+}
+
+.btnRow {
+    justify-self: right;
+    padding: .4em;
+    opacity: 0;
+}
+
+.postBtn {
+    width: 2em;
+    height: 2em;
+}
+
+.postBtnEnter {
+    opacity: 0;
+    transform: translateY(-10%);
+}
+
+.postBtnEnterActive {
+    opacity: 1;
+    transform: translateY(0%);
+    transition: transform 500ms, opacity 500ms;
+}
+
+.postBtnVisible {
+    opacity: 1;
+}
+
+.postBtnExit {
+    opacity: 1;
+    transform: translateY(0%);
+}
+
+.postBtnExitActive {
+    opacity: 0;
+    transform: translateY(-10%);
+    transition: transform 500ms, opacity 500ms;
+}
+
+.postBtnExitDone {
+    opacity: 0;
+}

@@ -12,6 +12,7 @@ import {
   CSSTransition,
   TransitionGroup,
 } from 'react-transition-group';
+import PostEditor from '../PostEditor';
 
 class Newsfeed extends React.Component {
   constructor(props) {
@@ -89,6 +90,7 @@ class Newsfeed extends React.Component {
   render() {
     return (
       <div ref={this.ref} className={styles.container}>
+        <PostEditor/>
         <TransitionGroup className={styles.postList}>
           {this.renderPosts()}
         </TransitionGroup>
