@@ -1,8 +1,8 @@
 .container {
     display: grid;
+    grid-template-rows: max-content max-content 14em;
     width: 100%;
     max-width: var(--max-post-width);
-    padding-bottom: 2em;
 }
 
 .postList {
@@ -13,6 +13,7 @@
 
 .footer {
     justify-self: center;
+    align-self: center;
 }
 
 .postEntering {
