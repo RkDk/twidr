@@ -39,6 +39,10 @@
     height: 2em;
 }
 
+.postBtn:hover {
+    cursor: pointer;
+}
+
 .postBtnEnter {
     opacity: 0;
     transform: translateY(-10%);
