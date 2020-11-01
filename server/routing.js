@@ -1,10 +1,11 @@
 const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
 const userAuthentication = require('./middleware/userAuthentication');
 const debug = require('debug')('twidr:routing');
 
 const routeMappings = [
   'newsfeed',
-  'twids',
+  'posts',
   'user',
   'users'
 ];
@@ -22,6 +23,7 @@ module.exports = (server) => {
   });
   server.use(cookieParser());
   server.use(userAuthentication);
+  server.use(bodyParser.json());
   routeMappings.forEach(route => {
     server.use(`/${route}`, require(`./routes/${route}`));
   });

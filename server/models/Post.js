@@ -36,6 +36,9 @@ class Post extends BaseModel {
       },
       aggregateUsers(builder) {
         builder.runAfter(response => {
+          if (!Array.isArray(response)) {
+            return { user: response.user, post: _.omit(response, 'user') };
+          }
           const users = [];
           const posts = response.map(post => {
             if (!users.some(({ id }) => id === post.userId)) {

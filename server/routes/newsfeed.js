@@ -10,9 +10,9 @@ router.get('/', async(request, response) => {
       .modify('defaultSelects')
       .modify('aggregateUsers')
       .modify(builder => {
+        builder.orderBy('createdAt', 'desc');
         if (offset) {
           builder.where('createdAt', '<', offset);
-          builder.orderBy('createdAt', 'desc');
         }
         if (limit) {
           builder.limit(limit);

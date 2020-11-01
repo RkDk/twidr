@@ -29,12 +29,22 @@
 }
 
 .btnRow {
-    justify-self: right;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    align-items: center;
+
     padding: .4em;
     opacity: 0;
 }
 
+.charCount {
+    justify-self: left;
+    margin-left: 10px;
+    color: #A2A2A2;
+}
+
 .postBtn {
+    justify-self: right;
     width: 2em;
     height: 2em;
 }

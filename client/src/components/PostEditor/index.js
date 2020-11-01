@@ -1,5 +1,7 @@
 import React from 'react';
+import Constants from '../../constants';
 import styles from './styles.module.css';
+import ApiService from '../../services/ApiService';
 import { ArrowRightCircleFill } from 'react-bootstrap-icons';
 import Form from 'react-bootstrap/Form';
 import {
@@ -18,11 +20,13 @@ class PostEditor extends React.Component {
     this.onFocus = this.onFocus.bind(this);
     this.onBlur = this.onBlur.bind(this);
   }
-  onConfirm() {
+  async onConfirm() {
+    const post = await ApiService.createPost( this.state.value );
+    this.props.onUserCreatedPost( post );
   }
   onChange(ev) {
     this.setState( {
-      value: ev.target.value
+      value: ev.target.value.substring( 0, Constants.MAX_POST_CHARACTERS )
     });
   }
   onFocus() {
@@ -50,6 +54,7 @@ class PostEditor extends React.Component {
           exitDone: styles.postBtnHidden
         }}>
           <div className={styles.btnRow}>
+            <div className={styles.charCount}>{Constants.MAX_POST_CHARACTERS - this.state.value.length} characters left</div>
             <ArrowRightCircleFill onClick={this.onConfirm} color={"#3771c8"} className={styles.postBtn}/>
           </div>
         </CSSTransition> 

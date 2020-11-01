@@ -12,6 +12,7 @@ import {
   CSSTransition,
   TransitionGroup,
 } from 'react-transition-group';
+
 import PostEditor from '../PostEditor';
 
 class Newsfeed extends React.Component {
@@ -26,10 +27,19 @@ class Newsfeed extends React.Component {
     this.state = {
       posts: [],
       showSpinner: false,
-      fetchedEverything: false
+      fetchedEverything: false,
     };
 
+    this.onUserCreatedPost = this.onUserCreatedPost.bind(this);
     this.handleScroll = this.handleScroll.bind(this);
+  }
+  attachPostRefs( posts ) {
+    return posts.map( post => {
+      return {
+        ...post, 
+        ref: post.ref || React.createRef( null )
+      };
+    } );
   }
   loadPosts( limit ) {
     ApiService.getNewsfeedPosts(limit, this.dateOffset)
@@ -37,7 +47,7 @@ class Newsfeed extends React.Component {
         const { posts: curPosts } = this.state;
         curPosts.push( ...newPosts.sort(( b, a ) => +new Date(a.post.createdAt) - +new Date(b.post.createdAt)));
         this.setState( {
-          posts: curPosts,
+          posts: this.attachPostRefs( curPosts ),
           showSpinner: false,
           fetchedEverything: newPosts.length === 0
         } );
@@ -69,18 +79,30 @@ class Newsfeed extends React.Component {
 
     window.addEventListener('scroll', this.handleScroll);
   }
+  onUserCreatedPost( post ) {
+    const { posts: curPosts } = this.state;
+    curPosts.unshift( {
+      ...post,
+      ref: React.createRef( null )
+    } );
+    this.setState( {
+      posts: curPosts
+    } );
+  }
   renderPosts() {
-    const postList = this.state.posts.map(({post,user}, index) => {
+    const postList = this.state.posts.map((postData, index) => {
+      const { post, user, ref } = postData;
       const delay = Math.max(0,index-(this.renderedPostCount-1)) * 50;
       const timeout = 500 + delay;
       const transitionDelay = `${delay}ms`;
       return (
         <CSSTransition in={true} timeout={timeout} key={index} 
+        nodeRef={ref}
         classNames={{
           enter: styles.postEntering,
           enterActive: styles.postActive
         }}>
-          <Post post={post} user={user} style={{ transitionDelay }} />
+          <Post ref={ref} post={post} user={user} style={{ transitionDelay }} />
         </CSSTransition>
       );
     });
@@ -90,7 +112,7 @@ class Newsfeed extends React.Component {
   render() {
     return (
       <div ref={this.ref} className={styles.container}>
-        <PostEditor/>
+        <PostEditor onUserCreatedPost={this.onUserCreatedPost}/>
         <TransitionGroup className={styles.postList}>
           {this.renderPosts()}
         </TransitionGroup>
