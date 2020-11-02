@@ -16,6 +16,19 @@
     align-self: center;
 }
 
+.newPostEntering {
+    opacity: 0;
+    background-color: #3771c8;
+    transform: translateY(-100%);
+}
+
+.newPostActive {
+    opacity: 1;
+    transform: translateY(0%);
+    background-color: #ECF1F1;
+    transition: background-color 350ms, transform 200ms, opacity 500ms;
+}
+
 .postEntering {
     opacity: 0;
     transform: translateY(50%);

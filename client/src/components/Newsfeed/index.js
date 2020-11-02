@@ -83,6 +83,7 @@ class Newsfeed extends React.Component {
     const { posts: curPosts } = this.state;
     curPosts.unshift( {
       ...post,
+      newlyCreated: true,
       ref: React.createRef( null )
     } );
     this.setState( {
@@ -91,16 +92,16 @@ class Newsfeed extends React.Component {
   }
   renderPosts() {
     const postList = this.state.posts.map((postData, index) => {
-      const { post, user, ref } = postData;
+      const { post, user, ref, newlyCreated } = postData;
       const delay = Math.max(0,index-(this.renderedPostCount-1)) * 50;
       const timeout = 500 + delay;
       const transitionDelay = `${delay}ms`;
       return (
-        <CSSTransition in={true} timeout={timeout} key={index} 
+        <CSSTransition in={true} timeout={timeout} key={post.id} 
         nodeRef={ref}
         classNames={{
-          enter: styles.postEntering,
-          enterActive: styles.postActive
+          enter: newlyCreated? styles.newPostEntering : styles.postEntering,
+          enterActive: newlyCreated? styles.newPostActive : styles.postActive
         }}>
           <Post ref={ref} post={post} user={user} style={{ transitionDelay }} />
         </CSSTransition>

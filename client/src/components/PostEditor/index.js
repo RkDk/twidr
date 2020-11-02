@@ -22,6 +22,9 @@ class PostEditor extends React.Component {
   }
   async onConfirm() {
     const post = await ApiService.createPost( this.state.value );
+    this.setState( {
+      value: ''
+    } );
     this.props.onUserCreatedPost( post );
   }
   onChange(ev) {
