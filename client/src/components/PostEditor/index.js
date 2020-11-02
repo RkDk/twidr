@@ -11,6 +11,7 @@ import {
 class PostEditor extends React.Component {
   constructor(props) {
     super(props);
+    this.textAreaRef = React.createRef(null);
     this.state = {
       showPostButton: false,
       value: ''
@@ -48,7 +49,7 @@ class PostEditor extends React.Component {
         <div className={styles.overlay} style={{display:this.state.showPostButton?'block' : 'none'}}/>
         <div className={styles.container}>
           <div>
-            <Form.Control as="textarea" value={this.state.value} onChange={this.onChange} onFocus={this.onFocus} onBlur={this.onBlur} placeholder="What's on your mind?" rows={3} className={`${styles.inputTextArea} ${this.state.showPostButton ? styles.containerSplit : styles.containerFull }`}/>
+            <Form.Control ref={this.textAreaRef} as="textarea" value={this.state.value} onChange={this.onChange} onFocus={this.onFocus} onBlur={this.onBlur} placeholder="What's on your mind?" rows={3} className={`${styles.inputTextArea} ${this.state.showPostButton ? styles.containerSplit : styles.containerFull }`}/>
           </div>
             <div className={styles.btnRow}>
               <CSSTransition in={this.state.showPostButton || this.state.value.length > 0} timeout={1000} classNames={{
@@ -69,7 +70,7 @@ class PostEditor extends React.Component {
                 exitActive: styles.postBtnExitActive,
                 exitDone: styles.postBtnHidden
               }}>
-                <div className={styles.centerIcon}><PencilSquare/></div>
+                <div className={styles.centerIcon} onClick={()=>this.textAreaRef.current.focus()}><PencilSquare/></div>
               </CSSTransition>
               <CSSTransition in={this.state.showPostButton || this.state.value.length > 0} timeout={1000} classNames={{
                 enter: styles.postBtnEnter,

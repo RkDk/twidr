@@ -82,7 +82,7 @@
 .postBtnEnterActive {
     opacity: 1;
     transform: translateY(0%);
-    transition: transform 500ms, opacity 500ms;
+    transition: transform 300ms, opacity 300ms;
 }
 
 .postBtnVisible {
@@ -97,7 +97,7 @@
 .postBtnExitActive {
     opacity: 0;
     transform: translateY(-10%);
-    transition: transform 500ms, opacity 500ms;
+    transition: transform 300ms, opacity 300ms;
 }
 
 .postBtnHidden {
