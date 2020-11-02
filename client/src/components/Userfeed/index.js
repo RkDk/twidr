@@ -14,6 +14,7 @@ import {
 } from 'react-transition-group';
 
 import PostEditor from '../PostEditor';
+import UserContext from '../../context/UserContext';
 
 class Userfeed extends React.Component {
   constructor(props) {
@@ -116,7 +117,7 @@ class Userfeed extends React.Component {
   render() {
     return (
       <div ref={this.ref} className={styles.container}>
-        <PostEditor onUserCreatedPost={this.onUserCreatedPost}/>
+        { this.props.userId === this.context.user.id? <PostEditor onUserCreatedPost={this.onUserCreatedPost}/> : <div></div> }
         <TransitionGroup className={styles.postList}>
           {this.renderPosts()}
         </TransitionGroup>
@@ -133,5 +134,6 @@ class Userfeed extends React.Component {
   }
 };
 
+Userfeed.contextType = UserContext;
 
 export default Userfeed;

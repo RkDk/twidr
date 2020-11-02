@@ -7,4 +7,13 @@ router.get('/', async(request, response) => {
   response.status(200).json(users);
 });
 
+router.get('/:userId', async(request, response) => {
+  const user = await
+  User
+    .query()
+    .findById(request.params.userId)
+    .modify('defaultSelects');
+  response.status(200).json(user);
+});
+
 module.exports = router;

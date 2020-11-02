@@ -2,7 +2,7 @@ import React from 'react';
 import Constants from '../../constants';
 import styles from './styles.module.css';
 import ApiService from '../../services/ApiService';
-import { ArrowRightCircleFill } from 'react-bootstrap-icons';
+import { ArrowRightCircleFill, PencilSquare } from 'react-bootstrap-icons';
 import Form from 'react-bootstrap/Form';
 import {
   CSSTransition
@@ -47,23 +47,42 @@ class PostEditor extends React.Component {
       <>
         <div className={styles.overlay} style={{display:this.state.showPostButton?'block' : 'none'}}/>
         <div className={styles.container}>
-        <div>
-          <Form.Control as="textarea" value={this.state.value} onChange={this.onChange} onFocus={this.onFocus} onBlur={this.onBlur} placeholder="What's on your mind?" rows={3} className={`${styles.inputTextArea} ${this.state.showPostButton ? styles.containerSplit : styles.containerFull }`}/>
-        </div>
-        <CSSTransition in={this.state.showPostButton || this.state.value.length > 0} timeout={1000} classNames={{
-          enter: styles.postBtnEnter,
-          enterActive: styles.postBtnEnterActive,
-          enterDone: styles.postBtnVisible,
-          exit: styles.postBtnExit,
-          exitActive: styles.postBtnExitActive,
-          exitDone: styles.postBtnHidden
-        }}>
-          <div className={styles.btnRow}>
-            <div className={styles.charCount}>{Constants.MAX_POST_CHARACTERS - this.state.value.length} characters left</div>
-            <ArrowRightCircleFill onClick={this.onConfirm} color={"#3771c8"} className={styles.postBtn}/>
+          <div>
+            <Form.Control as="textarea" value={this.state.value} onChange={this.onChange} onFocus={this.onFocus} onBlur={this.onBlur} placeholder="What's on your mind?" rows={3} className={`${styles.inputTextArea} ${this.state.showPostButton ? styles.containerSplit : styles.containerFull }`}/>
           </div>
-        </CSSTransition> 
-      </div>
+            <div className={styles.btnRow}>
+              <CSSTransition in={this.state.showPostButton || this.state.value.length > 0} timeout={1000} classNames={{
+                enter: styles.postBtnEnter,
+                enterActive: styles.postBtnEnterActive,
+                enterDone: styles.postBtnVisible,
+                exit: styles.postBtnExit,
+                exitActive: styles.postBtnExitActive,
+                exitDone: styles.postBtnHidden
+              }}>
+                <div className={styles.charCount}>{Constants.MAX_POST_CHARACTERS - this.state.value.length} characters left</div>
+              </CSSTransition>
+              <CSSTransition in={!this.state.showPostButton && this.state.value.length === 0} timeout={1000} classNames={{
+                enter: styles.postBtnEnter,
+                enterActive: styles.postBtnEnterActive,
+                enterDone: styles.postBtnVisible,
+                exit: styles.postBtnExit,
+                exitActive: styles.postBtnExitActive,
+                exitDone: styles.postBtnHidden
+              }}>
+                <div className={styles.centerIcon}><PencilSquare/></div>
+              </CSSTransition>
+              <CSSTransition in={this.state.showPostButton || this.state.value.length > 0} timeout={1000} classNames={{
+                enter: styles.postBtnEnter,
+                enterActive: styles.postBtnEnterActive,
+                enterDone: styles.postBtnVisible,
+                exit: styles.postBtnExit,
+                exitActive: styles.postBtnExitActive,
+                exitDone: styles.postBtnHidden
+              }}>
+                <ArrowRightCircleFill onClick={this.onConfirm} color={"#3771c8"} className={styles.postBtn}/>
+              </CSSTransition>
+            </div>
+        </div>
       </>
     );   
   }

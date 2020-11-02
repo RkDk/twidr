@@ -17,6 +17,11 @@
     justify-content: center;
 }
 
+.userFeed {
+    display: grid;
+    grid-template-rows: max-content max-content;
+}
+
 .userFeedRegularSize {
     width: 100%;
     grid-column-start: feed;

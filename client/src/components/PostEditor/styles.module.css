@@ -23,6 +23,10 @@
 
 .inputTextArea {
     resize: none;
+    background-color: #FAFAFA;
+    border-width: 0px;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
 }
 
 .inputTextArea:focus {
@@ -33,23 +37,37 @@
 
 .btnRow {
     display: grid;
-    grid-template-columns: 50% 50%;
+    grid-template-columns: [charCount] 33% [centerIcon] 33% [postButton];
+    grid-template-rows: max-content;
     align-items: center;
 
     padding: .4em;
-    opacity: 0;
+}
+
+.centerIcon {
+    grid-column-start: centerIcon;
+    justify-self: center;
+    opacity: 1;
+}
+
+.centerIcon:hover {
+    cursor: pointer;
 }
 
 .charCount {
+    grid-column-start: charCount;
     justify-self: left;
     margin-left: 10px;
     color: #A2A2A2;
+    opacity: 0;
 }
 
 .postBtn {
+    grid-column-start: postButton;
     justify-self: right;
     width: 2em;
     height: 2em;
+    opacity: 0;
 }
 
 .postBtn:hover {
@@ -82,7 +100,7 @@
     transition: transform 500ms, opacity 500ms;
 }
 
-.postBtnExitDone {
+.postBtnHidden {
     opacity: 0;
 }
 

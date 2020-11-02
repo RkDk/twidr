@@ -1,0 +1,31 @@
+.container {
+    display: grid;
+    grid-template-columns: max-content auto;
+    align-items: end;
+    margin-bottom: 20px;
+}
+
+.profileImage {
+    max-width: 100px;
+    max-height: 100px;
+    border-radius: 400px;
+}
+
+.infoSection {
+    margin-left: 10px;
+    padding-right: 20px;
+}
+
+.fullName {
+    font-size: 28px;
+    margin-bottom: -.35em;
+}
+
+.userHandle {
+    font-size: 14px;
+    color: #999999;
+}
+
+.userBio {
+    font-size: 14px;
+}

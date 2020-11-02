@@ -33,6 +33,12 @@ class ApiService {
         } );
         return axios( options ).then(({data})=> parseUserfeed(data));
     }
+    static async getUser(userId) {
+        const options = Utils.axiosOptions( `/users/${userId}`, {
+            method: 'GET'
+        } );
+        return axios( options ).then(({data})=>data);
+    }
     static getCurrentUser() {
         const options = Utils.axiosOptions( '/user', {
             method: 'GET'
