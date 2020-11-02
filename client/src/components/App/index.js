@@ -10,6 +10,7 @@ import UserContext, { defaultUser } from '../../context/UserContext';
 import UserManager from '../UserManager';
 
 import Dashboard from '../../pages/Dashboard';
+import UserProfile from '../../pages/UserProfile';
 import Login from '../../pages/Login';
 import UnknownPage from '../../pages/UnknownPage';
 
@@ -33,13 +34,14 @@ function PrivateComponent(props) {
   );
 }
 function PrivateRoute(props) {
-  const { children, ...params } = props;
+  const { component: Component, ...params } = props;
   return (
-    <Route {...params}>
-      <PrivateComponent>
-        {children}
-      </PrivateComponent>
-    </Route>
+    <Route {...params} render={
+      (_props) => 
+        <PrivateComponent>
+          <Component {..._props}/>
+        </PrivateComponent>
+    }/>
   );
 }
 
@@ -52,9 +54,8 @@ class App extends React.Component {
       <Router>
         <Switch>
           <UserManager>
-            <PrivateRoute exact path="/">
-              <Dashboard/>
-            </PrivateRoute>
+            <PrivateRoute exact path="/" component={Dashboard}/>
+            <PrivateRoute path="/user/:userId" component={UserProfile}/>
           </UserManager>
           <Route path="/login">
               <Login/>

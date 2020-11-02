@@ -44,7 +44,9 @@ class PostEditor extends React.Component {
   }
   render() {
     return (
-      <div className={styles.container}>
+      <>
+        <div className={styles.overlay} style={{display:this.state.showPostButton?'block' : 'none'}}/>
+        <div className={styles.container}>
         <div>
           <Form.Control as="textarea" value={this.state.value} onChange={this.onChange} onFocus={this.onFocus} onBlur={this.onBlur} placeholder="What's on your mind?" rows={3} className={`${styles.inputTextArea} ${this.state.showPostButton ? styles.containerSplit : styles.containerFull }`}/>
         </div>
@@ -62,6 +64,7 @@ class PostEditor extends React.Component {
           </div>
         </CSSTransition> 
       </div>
+      </>
     );   
   }
 }

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import Utils from '../utils';
 
-function parseNewsfeed( data ) {
+function parseUserfeed( data ) {
     const { users, posts } = data;
     return posts.map( post => {
         return {
@@ -25,7 +25,13 @@ class ApiService {
         const options = Utils.axiosOptions( `/newsfeed?limit=${limit}${offset? '&offset='.concat(offset) : ''}`, {
             method: 'GET'
         } );
-        return axios( options ).then(({data})=> parseNewsfeed(data));
+        return axios( options ).then(({data})=> parseUserfeed(data));
+    }
+    static async getUserfeedPosts(userId,limit,offset) {
+        const options = Utils.axiosOptions( `/posts?userId=${userId}&limit=${limit}${offset? '&offset='.concat(offset) : ''}`, {
+            method: 'GET'
+        } );
+        return axios( options ).then(({data})=> parseUserfeed(data));
     }
     static getCurrentUser() {
         const options = Utils.axiosOptions( '/user', {

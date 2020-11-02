@@ -15,7 +15,7 @@ import {
 
 import PostEditor from '../PostEditor';
 
-class Newsfeed extends React.Component {
+class Userfeed extends React.Component {
   constructor(props) {
     super(props);
     
@@ -41,8 +41,11 @@ class Newsfeed extends React.Component {
       };
     } );
   }
+  getPosts( limit, offset ) {
+    return this.props.userId? ApiService.getUserfeedPosts(this.props.userId,limit,offset) : ApiService.getNewsfeedPosts(limit,offset);
+  }
   loadPosts( limit ) {
-    ApiService.getNewsfeedPosts(limit, this.dateOffset)
+    this.getPosts(limit, this.dateOffset)
       .then((newPosts) => {
         const { posts: curPosts } = this.state;
         curPosts.push( ...newPosts.sort(( b, a ) => +new Date(a.post.createdAt) - +new Date(b.post.createdAt)));
@@ -54,7 +57,7 @@ class Newsfeed extends React.Component {
         if( newPosts.length ) {
           this.dateOffset = newPosts[newPosts.length-1].post.createdAt;
         }
-        this.nextApiFetch = Date.now() + Constants.MAX_DELAY_BETWEEN_NEWSFEED_FETCH;
+        this.nextApiFetch = Date.now() + Constants.MAX_DELAY_BETWEEN_USERFEED_FETCH;
       });
   }
   handleScroll(e) {
@@ -67,8 +70,8 @@ class Newsfeed extends React.Component {
         fetchedEverything: false
       });
       setTimeout( () => {
-        this.loadPosts( Constants.NEWSFEED_FETCH_COUNT );
-      }, Math.max( this.nextApiFetch - Date.now(), Constants.MIN_DELAY_BETWEEN_NEWSFEED_FETCH ) );
+        this.loadPosts( Constants.USERFEED_FETCH_COUNT );
+      }, Math.max( this.nextApiFetch - Date.now(), Constants.MIN_DELAY_BETWEEN_USERFEED_FETCH ) );
     }
   }
   componentDidMount() {
@@ -131,4 +134,4 @@ class Newsfeed extends React.Component {
 };
 
 
-export default Newsfeed;
+export default Userfeed;

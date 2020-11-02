@@ -2,23 +2,26 @@ const express = require('express');
 const Post = require('../models/Post');
 const router = express.Router();
 
-router.get('/', (request, response) => {
-  response.status(200).json({
-    twids: [
-      {
-        id: 1,
-        body: 'This is a test',
-        userId: 1,
-        timestamp: '1594866013579'
-      },
-      {
-        id: 2,
-        body: 'This is another test',
-        userId: 1,
-        timestamp: '1594866107457'
-      }
-    ]
-  });
+router.get('/', async(request, response) => {
+  const { userId = null, offset = null, limit = null } = request.query;
+  const posts =
+    await Post
+      .query()
+      .where({
+        userId: userId || request.activeUser.id
+      })
+      .modify(builder => {
+        builder.orderBy('createdAt', 'desc');
+        if (offset) {
+          builder.where('createdAt', '<', offset);
+        }
+        if (limit) {
+          builder.limit(limit);
+        }
+      })
+      .modify('defaultSelects')
+      .modify('aggregateUsers');
+  response.status(200).json(posts);
 });
 
 router.post('/', async(request, response) => {
@@ -33,7 +36,6 @@ router.post('/', async(request, response) => {
     })
     .modify('defaultSelects')
     .modify('aggregateUsers');
-  console.log(post);
   response.status(200).json(post);
 });
 

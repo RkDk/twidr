@@ -7,8 +7,6 @@ router.get('/', async(request, response) => {
   const posts =
     await Post
       .query()
-      .modify('defaultSelects')
-      .modify('aggregateUsers')
       .modify(builder => {
         builder.orderBy('createdAt', 'desc');
         if (offset) {
@@ -17,7 +15,9 @@ router.get('/', async(request, response) => {
         if (limit) {
           builder.limit(limit);
         }
-      });
+      })
+      .modify('defaultSelects')
+      .modify('aggregateUsers');
   response.status(200).json(posts);
 });
 

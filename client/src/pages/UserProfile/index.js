@@ -10,25 +10,20 @@ import RecommendedPanel from '../../components/RecommendedPanel';
 import styles from './styles.module.css';
 import UserContext from '../../context/UserContext';
 
-class Dashboard extends React.Component {
+class UserProfile extends React.Component {
 
   constructor(props) {
     super(props);
   }
 
   render() {
+    const { userId } = this.props.match.params;
     return (
       <div className={styles.container}>
           <Navbar/>
           <div className={[styles.content, styles.contentSmallSize, styles.contentRegularSize].join(' ')}>
-            { this.context?.user && (
-                <div className={styles.userBio}>
-                  <ProfileBioPanel/>
-                </div>
-              )
-            }
-            <div className={[styles.newsFeedSmallSize, styles.newsFeedRegularSize].join(' ')}>
-              <Userfeed/>
+            <div className={[styles.userFeedSmallSize, styles.userFeedRegularSize].join(' ')}>
+              <Userfeed userId={userId}/>
             </div>
             <div className={styles.sidePanels}>
               <TrendingPanel/>
@@ -40,6 +35,6 @@ class Dashboard extends React.Component {
   }
 }
 
-Dashboard.contextType = UserContext;
+UserProfile.contextType = UserContext;
 
-export default Dashboard;
+export default UserProfile;
