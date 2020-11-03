@@ -31,7 +31,7 @@ class Post extends BaseModel {
     return {
       defaultSelects(builder) {
         builder
-          .select('content', 'createdAt', 'userId')
+          .select('id', 'content', 'createdAt', 'userId')
           .withGraphFetched('[user(defaultSelects),metrics(defaultSelects)]');
       },
       aggregateUsers(builder) {
