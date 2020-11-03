@@ -13,7 +13,7 @@
     max-height: $post-max-height;
 
     background-color: $color-grey-1;
-    border-radius: $post-radius;
+    border-radius: $card-radius;
 }
 
 .headerRow {
@@ -31,6 +31,7 @@
     grid-template-columns: 1% [likes] max-content auto [shares] max-content auto [replies] max-content 30%;
     align-items: center;
     color: $color-grey-2;
+    font-size: $base-font-size-sm;
 }
 
 .footerRow > span {
@@ -75,6 +76,7 @@
 .timeDisplay {
     grid-area: time;
     color: $color-grey-2;
+    font-size: $base-font-size-sm;
 }
 
 .userHandle {

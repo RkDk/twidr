@@ -1,12 +1,14 @@
+@import '../../styles/main';
+
 .container {
     display: grid;
 
     width: 100%;
-    max-width: var(--max-post-width);
+    max-width: $post-max-width;
 
-    background-color: #ECF1F1;
-    border-radius: 8px;
-    padding: 0px;
+    background-color: $color-grey-1;
+    border-radius: $card-radius;
+    padding: 0;
     margin-bottom: 20px;
 
     position: relative;
@@ -23,10 +25,10 @@
 
 .inputTextArea {
     resize: none;
-    background-color: #FAFAFA;
-    border-width: 0px;
-    border-bottom-left-radius: 0px;
-    border-bottom-right-radius: 0px;
+    background-color: #fafafa;
+    border-width: 0;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
 }
 
 .inputTextArea:focus {
@@ -42,6 +44,7 @@
     align-items: center;
     cursor: text;
     padding: .4em;
+    font-size: $base-font-size-sm;
 }
 
 .centerIcon {
@@ -54,7 +57,7 @@
     grid-column-start: charCount;
     justify-self: left;
     margin-left: 10px;
-    color: #A2A2A2;
+    color: $color-grey-2;
     opacity: 0;
 }
 

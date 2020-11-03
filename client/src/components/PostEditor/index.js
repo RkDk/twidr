@@ -1,6 +1,6 @@
 import React from 'react';
 import Constants from '../../constants';
-import styles from './styles.module.css';
+import styles from './styles.module.scss';
 import ApiService from '../../services/ApiService';
 import { ArrowRightCircleFill, PencilSquare } from 'react-bootstrap-icons';
 import Form from 'react-bootstrap/Form';
@@ -71,7 +71,7 @@ class PostEditor extends React.Component {
                 exitActive: styles.postBtnExitActive,
                 exitDone: styles.postBtnHidden
               }}>
-                <div className={styles.centerIcon}><PencilSquare/></div>
+                <div className={styles.centerIcon}><h3><PencilSquare/></h3></div>
               </CSSTransition>
               <CSSTransition in={this.state.showPostButton || this.state.value.length > 0} timeout={1000} classNames={{
                 enter: styles.postBtnEnter,
