@@ -40,7 +40,7 @@
     grid-template-columns: [charCount] 33% [centerIcon] 33% [postButton];
     grid-template-rows: max-content;
     align-items: center;
-
+    cursor: text;
     padding: .4em;
 }
 
@@ -48,10 +48,6 @@
     grid-column-start: centerIcon;
     justify-self: center;
     opacity: 1;
-}
-
-.centerIcon:hover {
-    cursor: pointer;
 }
 
 .charCount {

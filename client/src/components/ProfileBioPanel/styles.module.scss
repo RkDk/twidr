@@ -1,0 +1,17 @@
+@import '../../styles/main.scss';
+
+.profileImage {
+    max-width: $panel-profile-max-width;
+    max-height: $panel-profile-max-height;
+    border-radius: $circle-image-radius;
+}
+
+.userHandle {
+    font-size: $base-font-size-sm;
+    color: $color-grey-2;
+    margin-top: -1em;
+}
+
+.userBio {
+    margin-top: .75em;
+}

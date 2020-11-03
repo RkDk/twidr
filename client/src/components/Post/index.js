@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './styles.module.css';
+import styles from './styles.module.scss';
 import Utils from '../../utils';
 import { Heart, Share, ChatRightText } from 'react-bootstrap-icons';
 
@@ -14,7 +14,7 @@ function _Post() {
           <div className={styles.nameDisplay}>{user.name}<span className={styles.userHandle}> @{user.handle}</span></div>
           <div className={styles.timeDisplay}>{Utils.formatDateTime(post.createdAt)}</div>
         </div>
-        <div className={styles.contentRow}>{post.content.substring(0,100)}{post.content.length>100 && <>...</> }</div>
+        <div className={styles.contentRow}>{post.content.substring(0,180)}{post.content.length>180 && <>...</> }</div>
         <div className={styles.footerRow}>
           <span className={styles.likesDisplay}>
             <Heart className={styles.footerIcon}/><span>{likes}</span>

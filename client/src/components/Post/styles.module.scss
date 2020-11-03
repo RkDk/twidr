@@ -1,14 +1,19 @@
+@import "../../styles/main.scss";
+
 .container {
     display: grid;
     grid-template-rows: max-content auto max-content;
     
+    font-size: $base-font-size;
+    padding: $post-padding;
+
     width: 100%;
-    max-width: var(--max-post-width);
-    height: var(--max-post-height);
-    
-    background-color: #ECF1F1;
-    border-radius: 8px;
-    padding: .97em;
+    max-width: $post-max-width;
+    min-height: $post-min-height;
+    max-height: $post-max-height;
+
+    background-color: $color-grey-1;
+    border-radius: $post-radius;
 }
 
 .headerRow {
@@ -18,14 +23,14 @@
 }
 
 .contentRow {
-    margin-top: .5em;
+    padding: .75em 0 2em 0;
 }
 
 .footerRow {
     display: grid; 
     grid-template-columns: 1% [likes] max-content auto [shares] max-content auto [replies] max-content 30%;
     align-items: center;
-    color: #999999;
+    color: $color-grey-2;
 }
 
 .footerRow > span {
@@ -56,23 +61,25 @@
 
 .userImageDisplay {
     grid-area: userImage;
-    border-radius: 400px;
-    width: 40px;
-    height: 40px;
+    border-radius: $circle-image-radius;
+    width: $post-avatar-width;
+    height: $post-avatar-height;
 }
 
 .nameDisplay {
     grid-area: name;
+    font-weight: 500;
     margin-left: .5em;
 }
 
 .timeDisplay {
     grid-area: time;
-    color: #999999;
+    color: $color-grey-2;
 }
 
 .userHandle {
-    color: #999999;
+    font-weight: normal;
+    color: $color-grey-2;
 }
 
 

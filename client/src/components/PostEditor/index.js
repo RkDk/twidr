@@ -27,6 +27,7 @@ class PostEditor extends React.Component {
       value: ''
     } );
     this.props.onUserCreatedPost( post );
+    this.textAreaRef.current.blur();
   }
   onChange(ev) {
     this.setState( {
@@ -51,7 +52,7 @@ class PostEditor extends React.Component {
           <div>
             <Form.Control ref={this.textAreaRef} as="textarea" value={this.state.value} onChange={this.onChange} onFocus={this.onFocus} onBlur={this.onBlur} placeholder="What's on your mind?" rows={3} className={`${styles.inputTextArea} ${this.state.showPostButton ? styles.containerSplit : styles.containerFull }`}/>
           </div>
-            <div className={styles.btnRow}>
+            <div className={styles.btnRow} onClick={()=>this.textAreaRef.current.focus()}>
               <CSSTransition in={this.state.showPostButton || this.state.value.length > 0} timeout={1000} classNames={{
                 enter: styles.postBtnEnter,
                 enterActive: styles.postBtnEnterActive,
@@ -70,7 +71,7 @@ class PostEditor extends React.Component {
                 exitActive: styles.postBtnExitActive,
                 exitDone: styles.postBtnHidden
               }}>
-                <div className={styles.centerIcon} onClick={()=>this.textAreaRef.current.focus()}><PencilSquare/></div>
+                <div className={styles.centerIcon}><PencilSquare/></div>
               </CSSTransition>
               <CSSTransition in={this.state.showPostButton || this.state.value.length > 0} timeout={1000} classNames={{
                 enter: styles.postBtnEnter,
