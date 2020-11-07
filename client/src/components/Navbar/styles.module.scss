@@ -1,7 +1,9 @@
+@import '../../styles/main.scss';
+
 .container {
     display: grid;
-    background-color: #709AD8;
-    color: #FFFFFF;
+    background-color: $color-blue-1;
+    color: $color-white;
     padding: .45em;
 }  
 
@@ -23,7 +25,7 @@
 .logo {
     justify-self: center;
     font-weight: bold;
-    font-size: 26px;
+    margin-bottom: 0;
 }
 
 .search {

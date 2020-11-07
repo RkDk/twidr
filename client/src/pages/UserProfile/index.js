@@ -6,7 +6,7 @@ import Userfeed from '../../components/Userfeed';
 import TrendingPanel from '../../components/TrendingPanel';
 import RecommendedPanel from '../../components/RecommendedPanel';
 
-import styles from './styles.module.css';
+import styles from './styles.module.scss';
 import UserContext from '../../context/UserContext';
 import ProfileBioBanner from '../../components/ProfileBioBanner';
 

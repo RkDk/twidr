@@ -1,15 +1,13 @@
 import React from 'react';
 import NavbarSearch from '../NavbarSearch';
-import styles from './styles.module.css';
+import styles from './styles.module.scss';
 
 import { PersonCircle, ThreeDots } from 'react-bootstrap-icons';
 
 function Navbar() {
   return (
     <div className={[styles.container, styles.containerSmallSize, styles.containerRegularSize].join(' ')}>
-      <div className={styles.logo}>
-        Twidr
-      </div>
+      <h1 className={styles.logo}>Twidr</h1>
       <div className={styles.search}>
         <NavbarSearch/>
       </div>

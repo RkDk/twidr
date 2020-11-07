@@ -5,7 +5,7 @@ import Post from '../Post';
 import Constants from '../../constants';
 import Utils from '../../utils';
 
-import styles from './styles.module.css';
+import styles from './styles.module.scss';
 import Spinner from 'react-bootstrap/Spinner';
 
 import {

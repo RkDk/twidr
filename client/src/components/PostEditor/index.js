@@ -81,7 +81,7 @@ class PostEditor extends React.Component {
                 exitActive: styles.postBtnExitActive,
                 exitDone: styles.postBtnHidden
               }}>
-                <ArrowRightCircleFill onClick={this.onConfirm} color={"#3771c8"} className={styles.postBtn}/>
+                <ArrowRightCircleFill onClick={this.onConfirm} className={styles.postBtn}/>
               </CSSTransition>
             </div>
         </div>

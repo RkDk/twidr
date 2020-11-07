@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import UserContext from '../../context/UserContext';
-import styles from './styles.module.css';
+import styles from './styles.module.scss';
 
 function ProfileBioBanner(props) {
   const { user } = props;

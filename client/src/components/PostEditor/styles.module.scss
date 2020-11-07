@@ -3,13 +3,13 @@
 .container {
     display: grid;
 
-    width: 100%;
     max-width: $post-max-width;
+    width: 100%;
 
     background-color: $color-grey-1;
     border-radius: $card-radius;
+    margin-bottom: $post-gap;
     padding: 0;
-    margin-bottom: 20px;
 
     position: relative;
     z-index: 200;
@@ -42,9 +42,10 @@
     grid-template-columns: [charCount] 33% [centerIcon] 33% [postButton];
     grid-template-rows: max-content;
     align-items: center;
+
+    font-size: $base-font-size-sm;
     cursor: text;
     padding: .4em;
-    font-size: $base-font-size-sm;
 }
 
 .centerIcon {
@@ -64,6 +65,7 @@
 .postBtn {
     grid-column-start: postButton;
     justify-self: right;
+    color: $color-blue-2;
     width: 2em;
     height: 2em;
     opacity: 0;
