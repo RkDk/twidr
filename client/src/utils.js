@@ -46,6 +46,12 @@ class Utils {
     static concatStyles( ...arg ) {
         return arg.join( ' ' );
     }
+    static navigateTo( history, path ) {
+        if( history.location.pathname === path ) {
+            return history.go(0);
+        }
+        history.push(path);
+    }
 }
 
 export default Utils;

@@ -1,21 +1,16 @@
 import React from 'react';
 import {useHistory} from 'react-router-dom';
 import NavbarSearch from '../NavbarSearch';
+import Utils from '../../utils';
 import styles from './styles.module.scss';
 
 import { PersonCircle, ThreeDots } from 'react-bootstrap-icons';
 
 function Navbar() {
   const history = useHistory();
-  function navigateToDashboard() {
-    if( history.location.pathname === '/' ) {
-      return history.go(0);
-    }
-    history.push("/");
-  }
   return (
     <div className={[styles.container, styles.containerSmallSize, styles.containerRegularSize].join(' ')}>
-      <h1 className={styles.logo} onClick={()=>navigateToDashboard()}>Twidr</h1>
+      <h1 className={styles.logo} onClick={()=>Utils.navigateTo(history,'/')}>Twidr</h1>
       <div className={styles.search}>
         <NavbarSearch/>
       </div>
