@@ -1,9 +1,40 @@
 @import '../../styles/main.scss';
 
+.container {
+    display: grid;
+    $grid-value: max-content auto;
+
+    &Panel {
+        @extend .container;
+        grid-template-rows: $grid-value;
+    }
+    &Banner {
+        @extend .container;
+        grid-template-columns: $grid-value;
+        align-items: end;
+        margin-bottom: $post-gap;
+    }
+}
+
 .profileImage {
-    max-width: $panel-profile-max-width;
-    max-height: $panel-profile-max-height;
-    border-radius: $circle-image-radius;
+    @extend %round-image;
+    &Panel {
+        @extend .profileImage;
+        max-width: $panel-profile-max-width;
+        max-height: $panel-profile-max-height;
+    }
+    &Banner {
+        @extend .profileImage;
+        max-width: 100px;
+        max-height: 100px;
+    }
+}
+
+.infoSection {
+    &Banner {
+        margin-left: 10px;
+        padding-right: 20px;
+    }
 }
 
 .userHandle {
@@ -13,5 +44,7 @@
 }
 
 .userBio {
-    margin-top: .45em;
+    &Panel {
+        margin-top: .45em;
+    }
 }

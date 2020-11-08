@@ -19,26 +19,28 @@
     align-self: center;
 }
 
-.newPostEntering {
-    opacity: 0;
-    background-color: $color-blue-3;
-    transform: translateY(-100%);
+.newPost {
+    &Entering {
+        opacity: 0;
+        background-color: $color-blue-3;
+        transform: translateY(-100%);
+    }
+    &Active {
+        opacity: 1;
+        transform: translateY(0%);
+        background-color: $color-grey-1;
+        transition: background-color 350ms, transform 200ms, opacity 500ms;
+    }
 }
 
-.newPostActive {
-    opacity: 1;
-    transform: translateY(0%);
-    background-color: $color-grey-1;
-    transition: background-color 350ms, transform 200ms, opacity 500ms;
-}
-
-.postEntering {
-    opacity: 0;
-    transform: translateY(50%);
-}
-
-.postActive {
-    opacity: 1;
-    transform: translateY(0%);
-    transition: transform 200ms, opacity 500ms;
+.post {
+    &Entering {
+        opacity: 0;
+        transform: translateY(50%);
+    }
+    &Active {
+        opacity: 1;
+        transform: translateY(0%);
+        transition: transform 200ms, opacity 500ms;
+    }
 }

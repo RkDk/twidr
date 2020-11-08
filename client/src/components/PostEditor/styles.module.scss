@@ -1,26 +1,18 @@
 @import '../../styles/main';
 
 .container {
+
+    @extend %card;
+    @extend %card-sizing;
+
     display: grid;
 
-    max-width: $post-max-width;
-    width: 100%;
-
-    background-color: $color-grey-1;
-    border-radius: $card-radius;
+    min-height: auto;
     margin-bottom: $post-gap;
     padding: 0;
 
     position: relative;
     z-index: 200;
-}
-
-.containerFull {
-    grid-template-rows: auto;
-}
-
-.containerSplit {
-    grid-template-rows: 50% 50%;
 }
 
 .inputTextArea {
@@ -69,50 +61,40 @@
     width: 2em;
     height: 2em;
     opacity: 0;
-}
 
-.postBtn:hover {
-    cursor: pointer;
-}
+    &Enter {
+        opacity: 0;
+        transform: translateY(-10%);
+    }
 
-.postBtnEnter {
-    opacity: 0;
-    transform: translateY(-10%);
-}
+    &EnterActive {
+        opacity: 1;
+        transform: translateY(0%);
+        transition: transform 300ms, opacity 300ms;
+    }
 
-.postBtnEnterActive {
-    opacity: 1;
-    transform: translateY(0%);
-    transition: transform 300ms, opacity 300ms;
-}
+    &Visible {
+        opacity: 1;
+    }
 
-.postBtnVisible {
-    opacity: 1;
-}
+    &Visible, &EnterActive {
+        &:hover {
+            cursor: pointer;
+        }
+    }
 
-.postBtnExit {
-    opacity: 1;
-    transform: translateY(0%);
-}
+    &Exit {
+        opacity: 1;
+        transform: translateY(0%);
+    }
 
-.postBtnExitActive {
-    opacity: 0;
-    transform: translateY(-10%);
-    transition: transform 300ms, opacity 300ms;
-}
+    &ExitActive {
+        opacity: 0;
+        transform: translateY(-10%);
+        transition: transform 300ms, opacity 300ms;
+    }
 
-.postBtnHidden {
-    opacity: 0;
-}
-
-.overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0,0,0,.25);
-    width: 100%;
-    height: 100%;
-    z-index: 100;
+    &Hidden {
+        opacity: 0;
+    }
 }

@@ -26,6 +26,9 @@
     justify-self: center;
     font-weight: bold;
     margin-bottom: 0;
+    &:hover {
+        cursor: pointer;
+    }
 }
 
 .search {

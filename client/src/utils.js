@@ -40,6 +40,12 @@ class Utils {
     static getDocumentScrollPercentage() {
         return ( window.pageYOffset + document.documentElement.clientHeight ) / document.documentElement.scrollHeight;
     }
+    static suffixStyle( styles, root, suffix ) {
+        return styles[root.concat(suffix)] || '';
+    }
+    static concatStyles( ...arg ) {
+        return arg.join( ' ' );
+    }
 }
 
 export default Utils;

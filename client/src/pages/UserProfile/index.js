@@ -8,7 +8,7 @@ import RecommendedPanel from '../../components/RecommendedPanel';
 
 import styles from './styles.module.scss';
 import UserContext from '../../context/UserContext';
-import ProfileBioBanner from '../../components/ProfileBioBanner';
+import ProfileBioPanel from '../../components/ProfileBioPanel';
 
 class UserProfile extends React.Component {
 
@@ -36,7 +36,7 @@ class UserProfile extends React.Component {
           <Navbar/>
           <div className={[styles.content, styles.contentSmallSize, styles.contentRegularSize].join(' ')}>
             <div className={[styles.userFeed, styles.userFeedSmallSize, styles.userFeedRegularSize].join(' ')}>
-              <ProfileBioBanner user={user}/>
+              <ProfileBioPanel isBanner={true} user={user}/>
               <Userfeed userId={user.id}/>
             </div>
             <div className={styles.sidePanels}>

@@ -1,19 +1,13 @@
 @import "../../styles/main.scss";
 
 .container {
+
+    @extend %card;
+    @extend %card-sizing;
+    @extend %card-padding;
+
     display: grid;
     grid-template-rows: max-content auto max-content;
-    
-    font-size: $base-font-size;
-    padding: $post-padding;
-
-    width: 100%;
-    max-width: $post-max-width;
-    min-height: $post-min-height;
-    max-height: $post-max-height;
-
-    background-color: $color-grey-1;
-    border-radius: $card-radius;
 }
 
 .headerRow {
@@ -61,8 +55,8 @@
 }
 
 .userImageDisplay {
+    @extend %round-image;
     grid-area: userImage;
-    border-radius: $circle-image-radius;
     width: $post-avatar-width;
     height: $post-avatar-height;
 }
@@ -82,6 +76,10 @@
 .userHandle {
     font-weight: normal;
     color: $color-grey-2;
+}
+
+.clickableName:hover {
+    cursor: pointer;    
 }
 
 

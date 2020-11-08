@@ -1,0 +1,19 @@
+%card {
+    background-color: $color-grey-1;
+    border-radius: $card-radius;
+}
+
+%card-sizing {
+    width: 100%;
+    max-width: $post-max-width;
+    min-height: $post-min-height;
+    max-height: $post-max-height;
+}
+
+%card-padding {
+    padding: $post-padding;
+}
+
+%round-image {
+    border-radius: $circle-image-radius;
+}
