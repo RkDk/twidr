@@ -12,7 +12,7 @@
         @extend .container;
         grid-template-columns: $grid-value;
         align-items: end;
-        margin-bottom: $post-gap;
+        margin-bottom: $card-gap;
     }
 }
 

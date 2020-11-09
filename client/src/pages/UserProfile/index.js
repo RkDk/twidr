@@ -9,6 +9,8 @@ import RecommendedPanel from '../../components/RecommendedPanel';
 import styles from './styles.module.scss';
 import UserContext from '../../context/UserContext';
 import ProfileBioPanel from '../../components/ProfileBioPanel';
+import Utils from '../../utils';
+import SideMenuPanel from '../../components/SideMenuPanel';
 
 class UserProfile extends React.Component {
 
@@ -34,12 +36,15 @@ class UserProfile extends React.Component {
     return (
       <div className={styles.container}>
           <Navbar/>
-          <div className={[styles.content, styles.contentSmallSize, styles.contentRegularSize].join(' ')}>
-            <div className={[styles.userFeed, styles.userFeedSmallSize, styles.userFeedRegularSize].join(' ')}>
+          <div className={styles.mainThreeColumn}>
+            <div className={Utils.concatStyles(styles.mainLeftCol,styles.sideMenu)}>
+                <SideMenuPanel includeDashboardLink={true}/>
+            </div>
+            <div className={styles.mainMidCol}>
               <ProfileBioPanel isBanner={true} user={user}/>
               <Userfeed userId={user.id}/>
             </div>
-            <div className={styles.sidePanels}>
+            <div className={styles.mainRightCol}>
               <TrendingPanel/>
               <RecommendedPanel/>
             </div>

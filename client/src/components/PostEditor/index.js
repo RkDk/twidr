@@ -61,7 +61,7 @@ class PostEditor extends React.Component {
                 exitActive: styles.postBtnExitActive,
                 exitDone: styles.postBtnHidden
               }}>
-                <div className={styles.charCount}>{Constants.MAX_POST_CHARACTERS - this.state.value.length} characters left</div>
+                <div className={styles.charCount}>{Constants.MAX_POST_CHARACTERS - this.state.value.length} / {Constants.MAX_POST_CHARACTERS}</div>
               </CSSTransition>
               <CSSTransition in={!this.state.showPostButton && this.state.value.length === 0} timeout={1000} classNames={{
                 enter: styles.postBtnEnter,

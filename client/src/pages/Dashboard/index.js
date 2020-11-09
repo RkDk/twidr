@@ -4,6 +4,7 @@ import ApiService from '../../services/ApiService';
 import Navbar from '../../components/Navbar';
 import ProfileBioPanel from '../../components/ProfileBioPanel';
 import Userfeed from '../../components/Userfeed';
+import SideMenuPanel from '../../components/SideMenuPanel';
 import TrendingPanel from '../../components/TrendingPanel';
 import RecommendedPanel from '../../components/RecommendedPanel';
 
@@ -20,17 +21,20 @@ class Dashboard extends React.Component {
     return (
       <div className={styles.container}>
           <Navbar/>
-          <div className={[styles.content, styles.contentSmallSize, styles.contentRegularSize].join(' ')}>
-            { this.context?.user && (
-                <div className={styles.userBio}>
-                  <ProfileBioPanel/>
-                </div>
-              )
-            }
-            <div className={[styles.newsFeedSmallSize, styles.newsFeedRegularSize].join(' ')}>
+          <div className={styles.mainThreeColumn}>
+            <div className={styles.mainLeftCol}>
+              { this.context?.user && (
+                  <div className={styles.userBio}>
+                    <ProfileBioPanel/>
+                  </div>
+                )
+              }
+              <SideMenuPanel/>
+            </div>
+            <div className={styles.mainMidCol}>
               <Userfeed/>
             </div>
-            <div className={styles.sidePanels}>
+            <div className={styles.mainRightCol}>
               <TrendingPanel/>
               <RecommendedPanel/>
             </div>

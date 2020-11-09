@@ -9,12 +9,12 @@ import { PersonCircle, ThreeDots } from 'react-bootstrap-icons';
 function Navbar() {
   const history = useHistory();
   return (
-    <div className={[styles.container, styles.containerSmallSize, styles.containerRegularSize].join(' ')}>
+    <div className={styles.container}>
       <h1 className={styles.logo} onClick={()=>Utils.navigateTo(history,'/')}>Twidr</h1>
       <div className={styles.search}>
         <NavbarSearch/>
       </div>
-      <div className={[styles.userActions, styles.userActionsSmallSize].join(' ')}>
+      <div className={styles.userActions}>
         <span><PersonCircle size={26}/></span>
         <span><ThreeDots size={26}/></span>
       </div>

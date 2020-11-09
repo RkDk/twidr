@@ -5,27 +5,21 @@
     background-color: $color-blue-1;
     color: $color-white;
     padding: .45em;
-}  
 
-.containerRegularSize {
     justify-content: center;
     grid-template-columns: 25% 35% 20%;
-}
 
-@media (max-width:700px){
-    .containerSmallSize {
+    @media all and (max-width:700px) {
         justify-content: left;
         grid-template-columns: 25% 50% 25%;
     }
-    .userActionsSmallSize {
-        margin-right: 10%;
-    }
-}
+}  
 
 .logo {
     justify-self: center;
     font-weight: bold;
     margin-bottom: 0;
+
     &:hover {
         cursor: pointer;
     }
@@ -40,6 +34,10 @@
     grid-template-columns: max-content max-content;
     justify-self: right;
     align-items: center;
+
+    @media all and (max-width:700px){
+        margin-right: 10%;
+    }
 }
 
 .userActions > span:not(:first-child) {

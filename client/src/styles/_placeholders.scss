@@ -1,6 +1,7 @@
 %card {
     background-color: $color-grey-1;
     border-radius: $card-radius;
+    margin-bottom: $card-gap;
 }
 
 %card-sizing {
@@ -17,3 +18,4 @@
 %round-image {
     border-radius: $circle-image-radius;
 }
+

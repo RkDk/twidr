@@ -5,14 +5,12 @@
     @extend %card;
     @extend %card-sizing;
 
-    display: grid;
-
     min-height: auto;
-    margin-bottom: $post-gap;
     padding: 0;
 
     position: relative;
     z-index: 200;
+
 }
 
 .inputTextArea {
