@@ -4,6 +4,7 @@ async function generateUsers(n) {
   const knexConfig = require('../knexfile');
   const knex = new Knex(knexConfig);
   try {
+    const userIds = await knex('users').select('id').then(users => users.map(user => user.id));
     for (let i = 0; i < n; i++) {
       const firstName = faker.name.firstName();
       const lastName = faker.name.lastName();
@@ -21,14 +22,31 @@ async function generateUsers(n) {
           })
           .returning('id');
 
-      await knex('users')
-        .insert({
-          name,
-          handle,
-          bio,
-          createdAt,
-          imageId
-        });
+      const [userId] =
+        await knex('users')
+          .insert({
+            name,
+            handle,
+            bio,
+            createdAt,
+            imageId
+          })
+          .returning('id');
+      userIds.push(userId);
+
+      for (let j = 0; j < userIds.length - 1; j++) {
+        const target = userIds[j];
+        await knex('userFollowers')
+          .insert({
+            followerId: target,
+            followeeId: userId
+          });
+        await knex('userFollowers')
+          .insert({
+            followerId: userId,
+            followeeId: target
+          });
+      }
     }
   } catch (err) {
     console.log(err);
