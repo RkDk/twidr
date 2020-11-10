@@ -27,19 +27,25 @@ router.get('/:userId', async(request, response, next) => {
 
 router.get('/:userId/followers', async(request, response, next) => {
   try {
-    const followerIds =
+    const { offset = null, limit = null } = request.query;
+    const followers =
       await UserFollower
         .query()
         .where({
           followeeId: request.params.userId
         })
-        .select('followerId');
-    const users =
-      await User
-        .query()
-        .findByIds(followerIds.map(v => v.followerId))
-        .modify('defaultSelects');
-    response.status(200).json(users);
+        .modify(builder => {
+          builder.orderBy('createdAt', 'desc');
+          if (offset) {
+            builder.where('createdAt', '<', offset);
+          }
+          if (limit) {
+            builder.limit(limit);
+          }
+        })
+        .select('createdAt')
+        .withGraphFetched('[follower(defaultSelects)]');
+    response.status(200).json(followers);
   } catch (err) {
     next(err);
   }

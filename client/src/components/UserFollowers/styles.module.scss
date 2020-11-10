@@ -1,0 +1,44 @@
+@import '../../styles/main';
+
+.container {
+    display: grid;
+    grid-template-rows: max-content max-content $userfeed-bottom-margin;
+    
+    max-width: $post-max-width;
+    width: 100%;
+}
+
+.postList {
+    padding-bottom: 1em;
+}
+
+.footer {
+    justify-self: center;
+    align-self: center;
+}
+
+.newPost {
+    &Entering {
+        opacity: 0;
+        background-color: $color-blue-3;
+        transform: translateY(-100%);
+    }
+    &Active {
+        opacity: 1;
+        transform: translateY(0%);
+        background-color: $color-grey-1;
+        transition: background-color 350ms, transform 200ms, opacity 500ms;
+    }
+}
+
+.post {
+    &Entering {
+        opacity: 0;
+        transform: translateY(50%);
+    }
+    &Active {
+        opacity: 1;
+        transform: translateY(0%);
+        transition: transform 200ms, opacity 500ms;
+    }
+}
