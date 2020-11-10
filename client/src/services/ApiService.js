@@ -39,6 +39,12 @@ class ApiService {
         } );
         return axios( options ).then(({data})=>data);
     }
+    static async getUserFollowers(userId) {
+        const options = Utils.axiosOptions( `/users/${userId}/followers`, {
+            method: 'GET'
+        } );
+        return axios( options ).then(({data})=>data);
+    }
     static getCurrentUser() {
         const options = Utils.axiosOptions( '/user', {
             method: 'GET'

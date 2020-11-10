@@ -37,7 +37,7 @@ class UserProfile extends React.Component {
       <div className={styles.container}>
           <Navbar/>
           <div className={styles.mainThreeColumn}>
-            <div className={Utils.concatStyles(styles.mainLeftCol,styles.sideMenu)}>
+            <div className={Utils.concatStyles(styles.mainLeftCol,styles.sideMenu,styles.hideOnSmallScreen)}>
                 <SideMenuPanel includeDashboardLink={true}/>
             </div>
             <div className={styles.mainMidCol}>

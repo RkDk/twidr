@@ -44,7 +44,12 @@
 }
 
 .userBio {
+    line-height: 1em;
+    margin-top: .45em;
     &Panel {
-        margin-top: .45em;
+        @extend .userBio;
+    }
+    &Banner {
+        @extend .userBio;
     }
 }

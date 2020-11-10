@@ -10,6 +10,7 @@ import RecommendedPanel from '../../components/RecommendedPanel';
 
 import styles from './styles.module.scss';
 import UserContext from '../../context/UserContext';
+import Utils from '../../utils';
 
 class Dashboard extends React.Component {
 
@@ -34,7 +35,7 @@ class Dashboard extends React.Component {
             <div className={styles.mainMidCol}>
               <Userfeed/>
             </div>
-            <div className={styles.mainRightCol}>
+            <div className={Utils.concatStyles( styles.mainRightCol, styles.hideOnSmallScreen)}>
               <TrendingPanel/>
               <RecommendedPanel/>
             </div>

@@ -63,6 +63,10 @@ h4 {
 }
 
 .mainRightCol {
+    justify-self: start;
+}
+
+.hideOnSmallScreen {
     @media all and (max-width:700px) {
         display: none;
     }
