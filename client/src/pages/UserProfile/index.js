@@ -11,6 +11,7 @@ import UserContext from '../../context/UserContext';
 import ProfileBioPanel from '../../components/ProfileBioPanel';
 import Utils from '../../utils';
 import SideMenuPanel from '../../components/SideMenuPanel';
+import UserFollowers from '../../components/UserFollowers';
 
 class UserProfile extends React.Component {
 
@@ -42,7 +43,7 @@ class UserProfile extends React.Component {
           </div>
           <div className={styles.mainMidCol}>
             <ProfileBioPanel isBanner={true} user={user}/>
-            <Userfeed userId={user.id}/>
+            <UserFollowers userId={user.id}/>
           </div>
           <div className={styles.mainRightCol}>
             <TrendingPanel/>

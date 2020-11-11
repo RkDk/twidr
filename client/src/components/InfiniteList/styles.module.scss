@@ -1,0 +1,11 @@
+.item {
+    &Entering {
+        opacity: 0;
+        transform: translateY(50%);
+    }
+    &Active {
+        opacity: 1;
+        transform: translateY(0%);
+        transition: transform 200ms, opacity 500ms;
+    }
+}
