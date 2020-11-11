@@ -1,7 +1,6 @@
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const userAuthentication = require('./middleware/userAuthentication');
-const { request } = require('express');
 const debug = require('debug')('twidr:routing');
 
 const routeMappings = [

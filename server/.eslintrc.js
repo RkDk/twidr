@@ -11,7 +11,8 @@ module.exports = {
     ecmaVersion: 2020
   },
   rules: {
-    semi: [2, 'always'],
-    'space-before-function-paren': ['error', 'never']
+    indent: ['error', 2],
+    semi: ['error', 'always'],
+    'space-before-function-paren': [0]
   }
 };
