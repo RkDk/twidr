@@ -5,7 +5,7 @@ const defaultUser = {
   user: null
 };
 
-const UserContext = React.createContext(defaultUser);
+const UserContext = React.createContext( defaultUser );
 
 export { defaultUser };
 export default UserContext;

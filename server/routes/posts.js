@@ -1,34 +1,34 @@
-const express = require('express');
-const Post = require('../models/Post');
+const express = require( 'express' );
+const Post = require( '../models/Post' );
 const router = express.Router();
 
-router.get('/', async(request, response, next) => {
+router.get( '/', async( request, response, next ) => {
   try {
     const { userId = null, offset = null, limit = null } = request.query;
     const posts =
       await Post
         .query()
-        .where({
+        .where( {
           userId: userId || request.activeUser.id
-        })
-        .modify(builder => {
-          builder.orderBy('createdAt', 'desc');
-          if (offset) {
-            builder.where('createdAt', '<', offset);
+        } )
+        .modify( builder => {
+          builder.orderBy( 'createdAt', 'desc' );
+          if ( offset ) {
+            builder.where( 'createdAt', '<', offset );
           }
-          if (limit) {
-            builder.limit(limit);
+          if ( limit ) {
+            builder.limit( limit );
           }
-        })
-        .modify('defaultSelects')
-        .modify('aggregateUsers');
-    response.status(200).json(posts);
-  } catch (err) {
-    next(err);
+        } )
+        .modify( 'defaultSelects' )
+        .modify( 'aggregateUsers' );
+    response.status( 200 ).json( posts );
+  } catch ( err ) {
+    next( err );
   }
-});
+} );
 
-router.post('/', async(request, response, next) => {
+router.post( '/', async( request, response, next ) => {
   try {
     const { activeUser, body } = request;
     const { id } = activeUser;
@@ -36,17 +36,17 @@ router.post('/', async(request, response, next) => {
     const post =
       await Post
         .query()
-        .insertGraph({
+        .insertGraph( {
           userId: id,
           content,
           metrics: {}
-        })
-        .modify('defaultSelects')
-        .modify('aggregateUsers');
-    response.status(200).json(post);
-  } catch (err) {
-    next(err);
+        } )
+        .modify( 'defaultSelects' )
+        .modify( 'aggregateUsers' );
+    response.status( 200 ).json( post );
+  } catch ( err ) {
+    next( err );
   }
-});
+} );
 
 module.exports = router;

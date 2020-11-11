@@ -13,6 +13,8 @@ module.exports = {
   rules: {
     indent: ['error', 2],
     semi: ['error', 'always'],
-    'space-before-function-paren': [0]
+    'space-before-function-paren': [0],
+    'space-in-parens': ['error', 'always'],
+    quotes: ['error', 'single']
   }
 };

@@ -1,8 +1,8 @@
-const User = require('../models/User');
+const User = require( '../models/User' );
 
 class UserService {
-  authenticateSession(userId, sessionCode) {
-    const user = User.query().findById(userId).modify('defaultSelects');
+  authenticateSession( userId, sessionCode ) {
+    const user = User.query().findById( userId ).modify( 'defaultSelects' );
     return user;
   }
 }

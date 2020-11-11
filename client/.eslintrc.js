@@ -24,7 +24,9 @@ module.exports = {
     indent: ['error', 2],
     semi: ['error', 'always'],
     "react/prop-types": [0],
-    "space-before-function-paren": [0]
+    "space-before-function-paren": [0],
+    "space-in-parens": ['error', 'always'],
+    'quotes': ['error', 'single']
   },
   settings: {
     react: {

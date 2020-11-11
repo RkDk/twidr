@@ -1,6 +1,6 @@
-const { Model } = require('objection');
-const BaseModel = require('./BaseModel');
-const Image = require('./Image');
+const { Model } = require( 'objection' );
+const BaseModel = require( './BaseModel' );
+const Image = require( './Image' );
 
 class User extends BaseModel {
   static get tableName() {
@@ -28,8 +28,8 @@ class User extends BaseModel {
 
   static get modifiers() {
     return {
-      defaultSelects(builder) {
-        builder.select('id', 'name', 'bio', 'handle').withGraphFetched('profileImage(selectUrl)');
+      defaultSelects( builder ) {
+        builder.select( 'id', 'name', 'bio', 'handle' ).withGraphFetched( 'profileImage(selectUrl)' );
       }
     };
   }

@@ -17,8 +17,8 @@ import PostEditor from '../PostEditor';
 import UserContext from '../../context/UserContext';
 
 class UserFollowers extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor( props ) {
+    super( props );
     
     this.ref = React.createRef();
     this.dateOffset = null;
@@ -31,10 +31,10 @@ class UserFollowers extends React.Component {
       fetchedEverything: false,
     };
 
-    this.handleScroll = this.handleScroll.bind(this);
+    this.handleScroll = this.handleScroll.bind( this );
   }
   attachFollowerRefs( followers ) {
-    return followers.map( ({createdAt, follower}) => {
+    return followers.map( ( {createdAt, follower} ) => {
       return {
         follower, 
         createdAt,
@@ -43,13 +43,13 @@ class UserFollowers extends React.Component {
     } );
   }
   getFollowers( limit, offset ) {
-    return ApiService.getUserFollowers(this.props.userId,limit,offset);
+    return ApiService.getUserFollowers( this.props.userId,limit,offset );
   }
   loadFollowers( limit ) {
-    this.getFollowers(limit, this.dateOffset)
-      .then((newFollowers) => {
+    this.getFollowers( limit, this.dateOffset )
+      .then( ( newFollowers ) => {
         const { followers: curFollowers } = this.state;
-        curFollowers.push( ...newFollowers.sort(( b, a ) => +new Date(a.createdAt) - +new Date(b.createdAt)) );
+        curFollowers.push( ...newFollowers.sort( ( b, a ) => +new Date( a.createdAt ) - +new Date( b.createdAt ) ) );
         this.setState( {
           followers: this.attachFollowerRefs( curFollowers ),
           showSpinner: false,
@@ -59,34 +59,34 @@ class UserFollowers extends React.Component {
           this.dateOffset = newFollowers[newFollowers.length-1].createdAt;
         }
         this.nextApiFetch = Date.now() + Constants.MAX_DELAY_BETWEEN_USERFEED_FETCH;
-      });
+      } );
   }
-  handleScroll(e) {
+  handleScroll( e ) {
     if( this.state.showSpinner || this.state.fetchedEverything ) {
       return;
     } 
     if( Utils.getDocumentScrollPercentage() > .9 ) {
-      this.setState({
+      this.setState( {
         showSpinner: true,
         fetchedEverything: false
-      });
+      } );
       setTimeout( () => {
         this.loadFollowers( Constants.USERFEED_FETCH_COUNT );
       }, Math.max( this.nextApiFetch - Date.now(), Constants.MIN_DELAY_BETWEEN_USERFEED_FETCH ) );
     }
   }
   componentDidMount() {
-    const thisY = Utils.getElementTop(this.ref?.current);
+    const thisY = Utils.getElementTop( this.ref?.current );
     const initialElementHeight = ( Utils.getViewportHeight() - thisY );
     const initialLimit = Math.ceil( initialElementHeight / 150 ); 
-    this.loadFollowers(initialLimit);
+    this.loadFollowers( initialLimit );
 
-    window.addEventListener('scroll', this.handleScroll);
+    window.addEventListener( 'scroll', this.handleScroll );
   }
   renderFollowers() {
-    const followerList = this.state.followers.map((postData, index) => {
+    const followerList = this.state.followers.map( ( postData, index ) => {
       const { follower, name, ref } = postData;
-      const delay = Math.max(0,index-(this.renderedFollowerCount-1)) * 50;
+      const delay = Math.max( 0,index-( this.renderedFollowerCount-1 ) ) * 50;
       const timeout = 500 + delay;
       const transitionDelay = `${delay}ms`;
       return (
@@ -101,7 +101,7 @@ class UserFollowers extends React.Component {
           </div>
         </CSSTransition>
       );
-    });
+    } );
     this.renderedFollowerCount = this.state.followers.length;
     return followerList;
   }
@@ -115,7 +115,7 @@ class UserFollowers extends React.Component {
           (
             <div className={styles.footer}>
               {this.state.showSpinner? <Spinner animation="border" /> : null}
-              {this.state.fetchedEverything? <b>{"That's all!"}</b> : null}
+              {this.state.fetchedEverything? <b>{'That\'s all!'}</b> : null}
             </div> 
           ) : null
         }

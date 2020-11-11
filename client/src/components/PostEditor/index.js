@@ -9,17 +9,17 @@ import {
 } from 'react-transition-group';
 
 class PostEditor extends React.Component {
-  constructor(props) {
-    super(props);
-    this.textAreaRef = React.createRef(null);
+  constructor( props ) {
+    super( props );
+    this.textAreaRef = React.createRef( null );
     this.state = {
       showPostButton: false,
       value: ''
     };
-    this.onConfirm = this.onConfirm.bind(this);
-    this.onChange = this.onChange.bind(this);
-    this.onFocus = this.onFocus.bind(this);
-    this.onBlur = this.onBlur.bind(this);
+    this.onConfirm = this.onConfirm.bind( this );
+    this.onChange = this.onChange.bind( this );
+    this.onFocus = this.onFocus.bind( this );
+    this.onBlur = this.onBlur.bind( this );
   }
   async onConfirm() {
     const post = await ApiService.createPost( this.state.value );
@@ -29,20 +29,20 @@ class PostEditor extends React.Component {
     this.props.onUserCreatedPost( post );
     this.textAreaRef.current.blur();
   }
-  onChange(ev) {
+  onChange( ev ) {
     this.setState( {
       value: ev.target.value.substring( 0, Constants.MAX_POST_CHARACTERS )
-    });
+    } );
   }
   onFocus() {
     this.setState( {
       showPostButton: true 
-    });
+    } );
   }
   onBlur() {
     this.setState( {
       showPostButton: false
-    });
+    } );
   }
   render() {
     return (

@@ -17,8 +17,8 @@ import PostEditor from '../PostEditor';
 import UserContext from '../../context/UserContext';
 
 class Userfeed extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor( props ) {
+    super( props );
     
     this.ref = React.createRef();
     this.dateOffset = null;
@@ -31,8 +31,8 @@ class Userfeed extends React.Component {
       fetchedEverything: false,
     };
 
-    this.onUserCreatedPost = this.onUserCreatedPost.bind(this);
-    this.handleScroll = this.handleScroll.bind(this);
+    this.onUserCreatedPost = this.onUserCreatedPost.bind( this );
+    this.handleScroll = this.handleScroll.bind( this );
   }
   attachPostRefs( posts ) {
     return posts.map( post => {
@@ -43,13 +43,13 @@ class Userfeed extends React.Component {
     } );
   }
   getPosts( limit, offset ) {
-    return this.props.userId? ApiService.getUserfeedPosts(this.props.userId,limit,offset) : ApiService.getNewsfeedPosts(limit,offset);
+    return this.props.userId? ApiService.getUserfeedPosts( this.props.userId,limit,offset ) : ApiService.getNewsfeedPosts( limit,offset );
   }
   loadPosts( limit ) {
-    this.getPosts(limit, this.dateOffset)
-      .then((newPosts) => {
+    this.getPosts( limit, this.dateOffset )
+      .then( ( newPosts ) => {
         const { posts: curPosts } = this.state;
-        curPosts.push( ...newPosts.sort(( b, a ) => +new Date(a.post.createdAt) - +new Date(b.post.createdAt)));
+        curPosts.push( ...newPosts.sort( ( b, a ) => +new Date( a.post.createdAt ) - +new Date( b.post.createdAt ) ) );
         this.setState( {
           posts: this.attachPostRefs( curPosts ),
           showSpinner: false,
@@ -59,29 +59,29 @@ class Userfeed extends React.Component {
           this.dateOffset = newPosts[newPosts.length-1].post.createdAt;
         }
         this.nextApiFetch = Date.now() + Constants.MAX_DELAY_BETWEEN_USERFEED_FETCH;
-      });
+      } );
   }
-  handleScroll(e) {
+  handleScroll( e ) {
     if( this.state.showSpinner || this.state.fetchedEverything ) {
       return;
     } 
     if( Utils.getDocumentScrollPercentage() > .9 ) {
-      this.setState({
+      this.setState( {
         showSpinner: true,
         fetchedEverything: false
-      });
+      } );
       setTimeout( () => {
         this.loadPosts( Constants.USERFEED_FETCH_COUNT );
       }, Math.max( this.nextApiFetch - Date.now(), Constants.MIN_DELAY_BETWEEN_USERFEED_FETCH ) );
     }
   }
   componentDidMount() {
-    const thisY = Utils.getElementTop(this.ref?.current);
+    const thisY = Utils.getElementTop( this.ref?.current );
     const initialElementHeight = ( Utils.getViewportHeight() - thisY );
     const initialLimit = Math.ceil( initialElementHeight / 150 ); 
-    this.loadPosts(initialLimit);
+    this.loadPosts( initialLimit );
 
-    window.addEventListener('scroll', this.handleScroll);
+    window.addEventListener( 'scroll', this.handleScroll );
   }
   onUserCreatedPost( post ) {
     const { posts: curPosts } = this.state;
@@ -95,9 +95,9 @@ class Userfeed extends React.Component {
     } );
   }
   renderPosts() {
-    const postList = this.state.posts.map((postData, index) => {
+    const postList = this.state.posts.map( ( postData, index ) => {
       const { post, user, ref, newlyCreated } = postData;
-      const delay = Math.max(0,index-(this.renderedPostCount-1)) * 50;
+      const delay = Math.max( 0,index-( this.renderedPostCount-1 ) ) * 50;
       const timeout = 500 + delay;
       const transitionDelay = `${delay}ms`;
       return (
@@ -110,7 +110,7 @@ class Userfeed extends React.Component {
           <Post ref={ref} post={post} user={user} style={{ transitionDelay }} />
         </CSSTransition>
       );
-    });
+    } );
     this.renderedPostCount = this.state.posts.length;
     return postList;
   }
@@ -125,7 +125,7 @@ class Userfeed extends React.Component {
           (
             <div className={styles.footer}>
               {this.state.showSpinner? <Spinner animation="border" /> : null}
-              {this.state.fetchedEverything? <b>{"That's all!"}</b> : null}
+              {this.state.fetchedEverything? <b>{'That\'s all!'}</b> : null}
             </div> 
           ) : null
         }

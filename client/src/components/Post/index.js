@@ -5,7 +5,7 @@ import Utils from '../../utils';
 import { Heart, Share, ChatRightText } from 'react-bootstrap-icons';
 
 function _Post() {
-  function Post(props,ref) {
+  function Post( props,ref ) {
     const { user, post, style } = props;
     const { likes, shares, replies } = post.metrics;
     const history = useHistory();
@@ -13,13 +13,13 @@ function _Post() {
       <div ref={ref} className={styles.container} style={style}>
         <div className={styles.headerRow}>
           <img className={styles.userImageDisplay} src={user.profileImage.url}/>
-          <div className={styles.nameDisplay} onClick={()=>Utils.navigateTo(history,`/user/${user.id}`)}>
+          <div className={styles.nameDisplay} onClick={()=>Utils.navigateTo( history,`/user/${user.id}` )}>
             <span className={styles.link}>{user.name}</span>
-            <span className={Utils.concatStyles(styles.userHandle, styles.link)}> @{user.handle}</span>
+            <span className={Utils.concatStyles( styles.userHandle, styles.link )}> @{user.handle}</span>
           </div>
-          <div className={styles.timeDisplay}>{Utils.formatDateTime(post.createdAt)}</div>
+          <div className={styles.timeDisplay}>{Utils.formatDateTime( post.createdAt )}</div>
         </div>
-        <div className={styles.contentRow}>{post.content.substring(0,180)}{post.content.length>180 && <>...</> }</div>
+        <div className={styles.contentRow}>{post.content.substring( 0,180 )}{post.content.length>180 && <>...</> }</div>
         <div className={styles.footerRow}>
           <span className={styles.likesDisplay}>
             <Heart className={styles.footerIcon}/><span>{likes}</span>
@@ -34,7 +34,7 @@ function _Post() {
       </div>
     );
   }
-  return React.forwardRef(Post);
+  return React.forwardRef( Post );
 }
 
 const Post = _Post();

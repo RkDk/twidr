@@ -1,8 +1,8 @@
-const { Model } = require('objection');
-const BaseModel = require('./BaseModel');
-const PostMetric = require('./PostMetric');
-const User = require('./User');
-const _ = require('lodash');
+const { Model } = require( 'objection' );
+const BaseModel = require( './BaseModel' );
+const PostMetric = require( './PostMetric' );
+const User = require( './User' );
+const _ = require( 'lodash' );
 
 class Post extends BaseModel {
   static get tableName() {
@@ -29,25 +29,25 @@ class Post extends BaseModel {
 
   static get modifiers() {
     return {
-      defaultSelects(builder) {
+      defaultSelects( builder ) {
         builder
-          .select('id', 'content', 'createdAt', 'userId')
-          .withGraphFetched('[user(defaultSelects),metrics(defaultSelects)]');
+          .select( 'id', 'content', 'createdAt', 'userId' )
+          .withGraphFetched( '[user(defaultSelects),metrics(defaultSelects)]' );
       },
-      aggregateUsers(builder) {
-        builder.runAfter(response => {
-          if (!Array.isArray(response)) {
-            return { user: response.user, post: _.omit(response, 'user') };
+      aggregateUsers( builder ) {
+        builder.runAfter( response => {
+          if ( !Array.isArray( response ) ) {
+            return { user: response.user, post: _.omit( response, 'user' ) };
           }
           const users = [];
-          const posts = response.map(post => {
-            if (!users.some(({ id }) => id === post.userId)) {
-              users.push(post.user);
+          const posts = response.map( post => {
+            if ( !users.some( ( { id } ) => id === post.userId ) ) {
+              users.push( post.user );
             }
-            return _.omit(post, 'user');
-          });
+            return _.omit( post, 'user' );
+          } );
           return { users, posts };
-        });
+        } );
       }
     };
   }

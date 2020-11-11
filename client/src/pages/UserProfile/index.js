@@ -14,8 +14,8 @@ import SideMenuPanel from '../../components/SideMenuPanel';
 
 class UserProfile extends React.Component {
 
-  constructor(props) {
-    super(props);
+  constructor( props ) {
+    super( props );
     this.state = {
       user: null
     };
@@ -25,19 +25,19 @@ class UserProfile extends React.Component {
     const user = await ApiService.getUser(  this.props.match.params.userId );
     this.setState( {
       user 
-    });
+    } );
   }
 
   render() {
     const { user } = this.state;
     if( !user ) {
-      return (<></>);
+      return ( <></> );
     }
     return (
       <div className={styles.container}>
         <Navbar/>
         <div className={styles.mainThreeColumn}>
-          <div className={Utils.concatStyles(styles.mainLeftCol,styles.sideMenu,styles.hideOnSmallScreen)}>
+          <div className={Utils.concatStyles( styles.mainLeftCol,styles.sideMenu,styles.hideOnSmallScreen )}>
             <SideMenuPanel includeDashboardLink={true}/>
           </div>
           <div className={styles.mainMidCol}>

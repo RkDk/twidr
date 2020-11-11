@@ -1,6 +1,6 @@
-const { Model } = require('objection');
-const BaseModel = require('./BaseModel');
-const User = require('./User');
+const { Model } = require( 'objection' );
+const BaseModel = require( './BaseModel' );
+const User = require( './User' );
 
 class UserFollower extends BaseModel {
   static get tableName() {
