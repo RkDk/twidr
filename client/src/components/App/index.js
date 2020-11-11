@@ -27,7 +27,7 @@ function PrivateComponent(props) {
     <>
       {userContext.user? (
         <>{props.children}</>
-        ) : 
+      ) : 
         (<Redirect to="/login"/>)
       }
     </>
@@ -58,7 +58,7 @@ class App extends React.Component {
             <PrivateRoute path="/user/:userId" component={UserProfile}/>
           </UserManager>
           <Route path="/login">
-              <Login/>
+            <Login/>
           </Route>
           <UnknownPage/>
         </Switch>

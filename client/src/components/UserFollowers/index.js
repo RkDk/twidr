@@ -91,11 +91,11 @@ class UserFollowers extends React.Component {
       const transitionDelay = `${delay}ms`;
       return (
         <CSSTransition in={true} timeout={timeout} key={follower.id} 
-        nodeRef={ref}
-        classNames={{
-          enter: styles.postEntering,
-          enterActive: styles.postActive
-        }}>
+          nodeRef={ref}
+          classNames={{
+            enter: styles.postEntering,
+            enterActive: styles.postActive
+          }}>
           <div ref={ref} style={{ transitionDelay }}>
             {follower.name}
           </div>
@@ -112,12 +112,12 @@ class UserFollowers extends React.Component {
           {this.renderFollowers()}
         </TransitionGroup>
         {this.state.showSpinner || this.state.fetchedEverything? 
-            (
-              <div className={styles.footer}>
-                {this.state.showSpinner? <Spinner animation="border" /> : null}
-                {this.state.fetchedEverything? <b>{"That's all!"}</b> : null}
-              </div> 
-            ) : null
+          (
+            <div className={styles.footer}>
+              {this.state.showSpinner? <Spinner animation="border" /> : null}
+              {this.state.fetchedEverything? <b>{"That's all!"}</b> : null}
+            </div> 
+          ) : null
         }
       </div>
     );

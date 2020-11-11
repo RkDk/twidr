@@ -21,8 +21,14 @@ module.exports = {
     'react'
   ],
   rules: {
-    semi: [2, 'always'],
+    indent: ['error', 2],
+    semi: ['error', 'always'],
     "react/prop-types": [0],
     "space-before-function-paren": [0]
-  }
+  },
+  settings: {
+    react: {
+      version: "detect"
+    }
+  } 
 }

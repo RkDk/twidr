@@ -102,11 +102,11 @@ class Userfeed extends React.Component {
       const transitionDelay = `${delay}ms`;
       return (
         <CSSTransition in={true} timeout={timeout} key={post.id} 
-        nodeRef={ref}
-        classNames={{
-          enter: newlyCreated? styles.newPostEntering : styles.postEntering,
-          enterActive: newlyCreated? styles.newPostActive : styles.postActive
-        }}>
+          nodeRef={ref}
+          classNames={{
+            enter: newlyCreated? styles.newPostEntering : styles.postEntering,
+            enterActive: newlyCreated? styles.newPostActive : styles.postActive
+          }}>
           <Post ref={ref} post={post} user={user} style={{ transitionDelay }} />
         </CSSTransition>
       );
@@ -122,12 +122,12 @@ class Userfeed extends React.Component {
           {this.renderPosts()}
         </TransitionGroup>
         {this.state.showSpinner || this.state.fetchedEverything? 
-            (
-              <div className={styles.footer}>
-                {this.state.showSpinner? <Spinner animation="border" /> : null}
-                {this.state.fetchedEverything? <b>{"That's all!"}</b> : null}
-              </div> 
-            ) : null
+          (
+            <div className={styles.footer}>
+              {this.state.showSpinner? <Spinner animation="border" /> : null}
+              {this.state.fetchedEverything? <b>{"That's all!"}</b> : null}
+            </div> 
+          ) : null
         }
       </div>
     );

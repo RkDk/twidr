@@ -21,25 +21,25 @@ class Dashboard extends React.Component {
   render() {
     return (
       <div className={styles.container}>
-          <Navbar/>
-          <div className={styles.mainThreeColumn}>
-            <div className={styles.mainLeftCol}>
-              { this.context?.user && (
-                  <div className={styles.userBio}>
-                    <ProfileBioPanel/>
-                  </div>
-                )
-              }
-              <SideMenuPanel/>
-            </div>
-            <div className={styles.mainMidCol}>
-              <Userfeed/>
-            </div>
-            <div className={Utils.concatStyles( styles.mainRightCol, styles.hideOnSmallScreen)}>
-              <TrendingPanel/>
-              <RecommendedPanel/>
-            </div>
+        <Navbar/>
+        <div className={styles.mainThreeColumn}>
+          <div className={styles.mainLeftCol}>
+            { this.context?.user && (
+              <div className={styles.userBio}>
+                <ProfileBioPanel/>
+              </div>
+            )
+            }
+            <SideMenuPanel/>
           </div>
+          <div className={styles.mainMidCol}>
+            <Userfeed/>
+          </div>
+          <div className={Utils.concatStyles( styles.mainRightCol, styles.hideOnSmallScreen)}>
+            <TrendingPanel/>
+            <RecommendedPanel/>
+          </div>
+        </div>
       </div>
     );
   }

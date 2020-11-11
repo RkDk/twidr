@@ -17,38 +17,38 @@ class UserProfile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-        user: null
+      user: null
     };
   }
 
   async componentDidMount() {
-      const user = await ApiService.getUser(  this.props.match.params.userId );
-      this.setState( {
-          user 
-      });
+    const user = await ApiService.getUser(  this.props.match.params.userId );
+    this.setState( {
+      user 
+    });
   }
 
   render() {
     const { user } = this.state;
     if( !user ) {
-        return (<></>);
+      return (<></>);
     }
     return (
       <div className={styles.container}>
-          <Navbar/>
-          <div className={styles.mainThreeColumn}>
-            <div className={Utils.concatStyles(styles.mainLeftCol,styles.sideMenu,styles.hideOnSmallScreen)}>
-                <SideMenuPanel includeDashboardLink={true}/>
-            </div>
-            <div className={styles.mainMidCol}>
-              <ProfileBioPanel isBanner={true} user={user}/>
-              <Userfeed userId={user.id}/>
-            </div>
-            <div className={styles.mainRightCol}>
-              <TrendingPanel/>
-              <RecommendedPanel/>
-            </div>
+        <Navbar/>
+        <div className={styles.mainThreeColumn}>
+          <div className={Utils.concatStyles(styles.mainLeftCol,styles.sideMenu,styles.hideOnSmallScreen)}>
+            <SideMenuPanel includeDashboardLink={true}/>
           </div>
+          <div className={styles.mainMidCol}>
+            <ProfileBioPanel isBanner={true} user={user}/>
+            <Userfeed userId={user.id}/>
+          </div>
+          <div className={styles.mainRightCol}>
+            <TrendingPanel/>
+            <RecommendedPanel/>
+          </div>
+        </div>
       </div>
     );
   }

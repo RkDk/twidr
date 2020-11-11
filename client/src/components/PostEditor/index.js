@@ -52,38 +52,38 @@ class PostEditor extends React.Component {
           <div>
             <Form.Control ref={this.textAreaRef} as="textarea" value={this.state.value} onChange={this.onChange} onFocus={this.onFocus} onBlur={this.onBlur} placeholder="What's on your mind?" rows={3} className={styles.inputTextArea}/>
           </div>
-            <div className={styles.btnRow} onClick={()=>this.textAreaRef.current.focus()}>
-              <CSSTransition in={this.state.showPostButton || this.state.value.length > 0} timeout={1000} classNames={{
-                enter: styles.postBtnEnter,
-                enterActive: styles.postBtnEnterActive,
-                enterDone: styles.postBtnVisible,
-                exit: styles.postBtnExit,
-                exitActive: styles.postBtnExitActive,
-                exitDone: styles.postBtnHidden
-              }}>
-                <div className={styles.charCount}>{Constants.MAX_POST_CHARACTERS - this.state.value.length} / {Constants.MAX_POST_CHARACTERS}</div>
-              </CSSTransition>
-              <CSSTransition in={!this.state.showPostButton && this.state.value.length === 0} timeout={1000} classNames={{
-                enter: styles.postBtnEnter,
-                enterActive: styles.postBtnEnterActive,
-                enterDone: styles.postBtnVisible,
-                exit: styles.postBtnExit,
-                exitActive: styles.postBtnExitActive,
-                exitDone: styles.postBtnHidden
-              }}>
-                <div className={styles.centerIcon}><h3><PencilSquare/></h3></div>
-              </CSSTransition>
-              <CSSTransition in={this.state.showPostButton || this.state.value.length > 0} timeout={1000} classNames={{
-                enter: styles.postBtnEnter,
-                enterActive: styles.postBtnEnterActive,
-                enterDone: styles.postBtnVisible,
-                exit: styles.postBtnExit,
-                exitActive: styles.postBtnExitActive,
-                exitDone: styles.postBtnHidden
-              }}>
-                <ArrowRightCircleFill onClick={this.onConfirm} className={styles.postBtn}/>
-              </CSSTransition>
-            </div>
+          <div className={styles.btnRow} onClick={()=>this.textAreaRef.current.focus()}>
+            <CSSTransition in={this.state.showPostButton || this.state.value.length > 0} timeout={1000} classNames={{
+              enter: styles.postBtnEnter,
+              enterActive: styles.postBtnEnterActive,
+              enterDone: styles.postBtnVisible,
+              exit: styles.postBtnExit,
+              exitActive: styles.postBtnExitActive,
+              exitDone: styles.postBtnHidden
+            }}>
+              <div className={styles.charCount}>{Constants.MAX_POST_CHARACTERS - this.state.value.length} / {Constants.MAX_POST_CHARACTERS}</div>
+            </CSSTransition>
+            <CSSTransition in={!this.state.showPostButton && this.state.value.length === 0} timeout={1000} classNames={{
+              enter: styles.postBtnEnter,
+              enterActive: styles.postBtnEnterActive,
+              enterDone: styles.postBtnVisible,
+              exit: styles.postBtnExit,
+              exitActive: styles.postBtnExitActive,
+              exitDone: styles.postBtnHidden
+            }}>
+              <div className={styles.centerIcon}><h3><PencilSquare/></h3></div>
+            </CSSTransition>
+            <CSSTransition in={this.state.showPostButton || this.state.value.length > 0} timeout={1000} classNames={{
+              enter: styles.postBtnEnter,
+              enterActive: styles.postBtnEnterActive,
+              enterDone: styles.postBtnVisible,
+              exit: styles.postBtnExit,
+              exitActive: styles.postBtnExitActive,
+              exitDone: styles.postBtnHidden
+            }}>
+              <ArrowRightCircleFill onClick={this.onConfirm} className={styles.postBtn}/>
+            </CSSTransition>
+          </div>
         </div>
       </>
     );   

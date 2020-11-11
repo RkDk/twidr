@@ -1,8 +1,8 @@
 import React from 'react';
 
 const defaultUser = {
-    fetchedUser: false,
-    user: null
+  fetchedUser: false,
+  user: null
 };
 
 const UserContext = React.createContext(defaultUser);
