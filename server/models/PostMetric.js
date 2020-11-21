@@ -1,4 +1,4 @@
-const BaseModel = require( './BaseModel' );
+const BaseModel = require('./BaseModel');
 
 class PostMetric extends BaseModel {
   static get tableName() {
@@ -14,19 +14,19 @@ class PostMetric extends BaseModel {
       type: 'object',
       required: ['postId'],
       properties: {
-        id: { type: 'integer', readOnly: true },
-        postId: { type: 'integer' },
-        likes: { type: 'integer', minimum: 0 },
-        shares: { type: 'integer', minimum: 0 },
-        replies: { type: 'integer', minimum: 0 }
+        id: {type: 'integer', readOnly: true},
+        postId: {type: 'integer'},
+        likes: {type: 'integer', minimum: 0},
+        shares: {type: 'integer', minimum: 0},
+        replies: {type: 'integer', minimum: 0}
       }
     };
   }
 
   static get modifiers() {
     return {
-      defaultSelects( builder ) {
-        builder.select( 'likes', 'shares', 'replies' );
+      defaultSelects(builder) {
+        builder.select('likes', 'shares', 'replies');
       }
     };
   }

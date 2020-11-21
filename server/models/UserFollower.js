@@ -1,6 +1,6 @@
-const { Model } = require( 'objection' );
-const BaseModel = require( './BaseModel' );
-const User = require( './User' );
+const {Model} = require('objection');
+const BaseModel = require('./BaseModel');
+const User = require('./User');
 
 class UserFollower extends BaseModel {
   static get tableName() {
@@ -16,10 +16,10 @@ class UserFollower extends BaseModel {
       type: 'object',
       required: ['followerId', 'followeeId'],
       properties: {
-        id: { type: 'integer', readOnly: true },
-        followerId: { type: 'integer' },
-        followeeId: { type: 'integer' },
-        createdAt: { type: 'timestamp', readOnly: true }
+        id: {type: 'integer', readOnly: true},
+        followerId: {type: 'integer'},
+        followeeId: {type: 'integer'},
+        createdAt: {type: 'timestamp', readOnly: true}
       }
     };
   }

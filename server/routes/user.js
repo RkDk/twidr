@@ -1,12 +1,12 @@
-const express = require( 'express' );
+const express = require('express');
 const router = express.Router();
 
-router.get( '/', async( request, response, next ) => {
+router.get('/', async(request, response, next) => {
   try {
-    response.status( 200 ).json( request.activeUser );
-  } catch ( err ) {
-    next( err );
+    response.status(200).json(request.activeUser);
+  } catch (err) {
+    next(err);
   }
-} );
+});
 
 module.exports = router;

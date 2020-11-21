@@ -1,4 +1,4 @@
-const { Model } = require( 'objection' );
+const {Model} = require('objection');
 
 class Image extends Model {
   static get tableName() {
@@ -14,7 +14,7 @@ class Image extends Model {
   }
 
   get url() {
-    return this.path.substring( 0, 4 ) === 'http' ? this.path : 'http://localhost:3000/'.concat( this.path );
+    return this.path.substring(0, 4) === 'http' ? this.path : 'http://localhost:3000/'.concat(this.path);
   }
 
   static get jsonSchema() {
@@ -22,29 +22,29 @@ class Image extends Model {
       type: 'object',
       required: ['path'],
       properties: {
-        id: { type: 'integer', readOnly: true },
-        path: { type: 'string' }
+        id: {type: 'integer', readOnly: true},
+        path: {type: 'string'}
       }
     };
   }
 
   static get modifiers() {
     return {
-      selectUrl( builder ) {
-        builder.select( 'path' ).runAfter( result => {
-          if ( result.length ) {
-            result.forEach( v => {
+      selectUrl(builder) {
+        builder.select('path').runAfter(result => {
+          if (result.length) {
+            result.forEach(v => {
               v.onlyUrl = true;
-            } );
+            });
           }
-        } );
+        });
       }
     };
   }
 
-  $formatJson( json ) {
-    json = super.$formatJson( json );
-    if ( json.onlyUrl && json.url ) {
+  $formatJson(json) {
+    json = super.$formatJson(json);
+    if (json.onlyUrl && json.url) {
       json = {
         url: json.url
       };
