@@ -6,13 +6,14 @@ import {
 import Spinner from 'react-bootstrap/Spinner';
 import Constants from '../../constants';
 import Utils from '../../utils';
+import { HandThumbsUp } from 'react-bootstrap-icons';
 import styles from './styles.module.scss';
   
 class InfiniteList extends React.Component {
-  constructor( props ) {
+  constructor( props ) {  
     super( props );
     this.ref = React.createRef( null );
-    this.state = {
+    this.state = { 
       items: [],
       showSpinner: false,
       fetchedEverything: false
@@ -24,21 +25,20 @@ class InfiniteList extends React.Component {
     if( this.state.showSpinner || this.state.fetchedEverything ) {
       return;
     }   
-    console.log(  Utils.getDocumentScrollPercentage() );
     if( Utils.getDocumentScrollPercentage() > .9 ) {
       this.setState( {
         showSpinner: true,
         fetchedEverything: false
       } );
       setTimeout( () => {
-        this.loadItems( Constants.USERFEED_FETCH_COUNT );
-      }, Math.max( this.nextApiFetch - Date.now(), Constants.MIN_DELAY_BETWEEN_USERFEED_FETCH ) );
+        this.loadItems( Constants.INFINITE_LIST_FETCH_COUNT );
+      }, Math.max( this.nextApiFetch - Date.now(), Constants.MIN_DELAY_BETWEEN_INFINITE_LIST_FETCH ) );
     } 
   }
   componentDidMount() {
     const thisY = Utils.getElementTop( this.ref?.current );
     const initialElementHeight = ( Utils.getViewportHeight() - thisY );
-    const initialLimit = Math.ceil( initialElementHeight / 150 ); 
+    const initialLimit = Math.ceil( initialElementHeight / this.props.elementHeight ); 
     this.loadItems( initialLimit );
     window.addEventListener( 'scroll', this.handleScroll );
   }
@@ -71,7 +71,7 @@ class InfiniteList extends React.Component {
         if( newItems.length ) {
           this.dateOffset = newItems[newItems.length-1].item.createdAt;
         }
-        this.nextApiFetch = Date.now() + Constants.MAX_DELAY_BETWEEN_USERFEED_FETCH;
+        this.nextApiFetch = Date.now() + Constants.MAX_DELAY_BETWEEN_INFINITE_LIST_FETCH;
       } );
   }
   renderItems() {
@@ -92,7 +92,7 @@ class InfiniteList extends React.Component {
               {this.props.renderItem( item )}
             </div>
           }
-        </CSSTransition>
+        </CSSTransition> 
       );
     } );
     this.renderedItemCount = this.state.items.length;
@@ -108,8 +108,10 @@ class InfiniteList extends React.Component {
         {this.state.showSpinner || this.state.fetchedEverything? 
           (
             <div className={styles.footer}>
-              {this.state.showSpinner? <Spinner animation="border" /> : null}
-              {this.state.fetchedEverything? <b>{'That\'s all!'}</b> : null}
+              <div>
+                {this.state.showSpinner? <Spinner animation="border" /> : null}
+                {this.state.fetchedEverything? <div className={styles.thumbsUp}><HandThumbsUp/></div> : null}
+              </div>
             </div> 
           ) : null
         }

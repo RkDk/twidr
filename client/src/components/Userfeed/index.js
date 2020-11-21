@@ -10,10 +10,11 @@ import Spinner from 'react-bootstrap/Spinner';
 
 import {
   CSSTransition,
-  TransitionGroup,
+  TransitionGroup, 
 } from 'react-transition-group';
 
 import PostEditor from '../PostEditor';
+import InfiniteList from '../InfiniteList';
 import UserContext from '../../context/UserContext';
 
 class Userfeed extends React.Component {
@@ -31,6 +32,7 @@ class Userfeed extends React.Component {
       fetchedEverything: false,
     };
 
+    this.getUserfeedPosts = this.getUserfeedPosts.bind( this );
     this.onUserCreatedPost = this.onUserCreatedPost.bind( this );
     this.handleScroll = this.handleScroll.bind( this );
   }
@@ -42,9 +44,12 @@ class Userfeed extends React.Component {
       };
     } );
   }
-  getPosts( limit, offset ) {
-    return this.props.userId? ApiService.getUserfeedPosts( this.props.userId,limit,offset ) : ApiService.getNewsfeedPosts( limit,offset );
+  getUserfeedPosts( limit, offset ) {
+    return ApiService.getUserfeedPosts( this.props.userId,limit,offset );
   }
+  getNewsfeedPosts( limit, offset ) {
+    return ApiService.getNewsfeedPosts( limit,offset );
+  } 
   loadPosts( limit ) {
     this.getPosts( limit, this.dateOffset )
       .then( ( newPosts ) => {
@@ -76,12 +81,7 @@ class Userfeed extends React.Component {
     }
   }
   componentDidMount() {
-    const thisY = Utils.getElementTop( this.ref?.current );
-    const initialElementHeight = ( Utils.getViewportHeight() - thisY );
-    const initialLimit = Math.ceil( initialElementHeight / 150 ); 
-    this.loadPosts( initialLimit );
 
-    window.addEventListener( 'scroll', this.handleScroll );
   }
   onUserCreatedPost( post ) {
     const { posts: curPosts } = this.state;
@@ -118,18 +118,17 @@ class Userfeed extends React.Component {
     return (
       <div ref={this.ref} className={styles.container}>
         { !this.props.userId || this.props.userId === this.context.user.id? <PostEditor onUserCreatedPost={this.onUserCreatedPost}/> : <div></div> }
-        <TransitionGroup className={styles.postList}>
-          {this.renderPosts()}
-        </TransitionGroup>
-        {this.state.showSpinner || this.state.fetchedEverything? 
-          (
-            <div className={styles.footer}>
-              {this.state.showSpinner? <Spinner animation="border" /> : null}
-              {this.state.fetchedEverything? <b>{'That\'s all!'}</b> : null}
-            </div> 
-          ) : null
-        }
+        <InfiniteList 
+          containerClassname={styles.postList} 
+          loadItems={this.props.userId? this.getUserfeedPosts : this.getNewsfeedPosts} 
+          elementHeight={150}
+          renderItem={item=>{
+            const { post, user } = item;
+            return (  <Post user={user} post={post}/> );
+          }}
+        />
       </div>
+      
     );
   }
 };

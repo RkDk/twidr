@@ -15,6 +15,7 @@ import {
 
 import PostEditor from '../PostEditor';
 import UserContext from '../../context/UserContext';
+import InlineUserCard from '../InlineUserCard';
 
 class UserFollowers extends React.Component {
   constructor( props ) {
@@ -28,12 +29,11 @@ class UserFollowers extends React.Component {
     return (
       <div className={styles.container}>
         <InfiniteList 
-          containerClassname={styles.postList} 
+          containerClassname={styles.followerList} 
           loadItems={this.getFollowers} 
+          elementHeight={85}
           renderItem={item=>{
-            return ( <>
-              {item.follower.name}
-            </> );
+            return (  <InlineUserCard user={item.follower}/> );
           }}
         />
       </div>

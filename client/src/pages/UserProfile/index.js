@@ -45,7 +45,7 @@ class UserProfile extends React.Component {
             <ProfileBioPanel isBanner={true} user={user}/>
             <UserFollowers userId={user.id}/>
           </div>
-          <div className={styles.mainRightCol}>
+          <div className={Utils.concatStyles( styles.mainRightCol,styles.hideOnSmallScreen )}>
             <TrendingPanel/>
             <RecommendedPanel/>
           </div>

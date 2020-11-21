@@ -1,0 +1,26 @@
+@import '../../styles/main';
+
+.container {
+    @extend %card;
+
+    display: grid;
+    grid-template-columns: 15% auto 20%;
+    justify-items: left;
+    align-items: center;
+
+    margin-bottom: .5em;
+    padding: .5em;
+
+    div:not(:nth-child(3)) {
+        margin-left: .5em;
+    }
+
+}
+
+.profileImage {
+    @extend %round-image;
+    width: 80%;
+    height: auto;
+    min-width: 2em;
+    min-height: 2em;
+}
