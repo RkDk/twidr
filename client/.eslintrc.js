@@ -26,7 +26,9 @@ module.exports = {
     semi: ['error', 'always'],
     "react/prop-types": [0],
     "space-before-function-paren": [0],
-    "space-in-parens": ['error', 'always'],
+    "space-in-parens": ['error', 'never'],
+    "space-in-brackets": ['error', 'never'],
+    "comma-spacing": ["error", { "before": false, "after": true }],
     'quotes': ['error', 'single']
   },
   settings: {

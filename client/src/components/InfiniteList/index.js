@@ -7,81 +7,89 @@ import Spinner from 'react-bootstrap/Spinner';
 import Constants from '../../constants';
 import Utils from '../../utils';
 import { HandThumbsUp } from 'react-bootstrap-icons';
+import _ from 'lodash';
 import styles from './styles.module.scss';
   
 class InfiniteList extends React.Component {
-  constructor( props ) {  
-    super( props );
-    this.ref = React.createRef( null );
+  constructor(props) {  
+    super(props);
+    this.ref = React.createRef(null);
     this.state = { 
       items: [],
       showSpinner: false,
       fetchedEverything: false
     };
     this.nextApiFetch = 0;
-    this.handleScroll = this.handleScroll.bind( this );
+    this.handleScroll = this.handleScroll.bind(this);
   }
   handleScroll() {
-    if( this.state.showSpinner || this.state.fetchedEverything ) {
+    if(this.state.showSpinner || this.state.fetchedEverything) {
       return;
     }   
-    if( Utils.getDocumentScrollPercentage() > .9 ) {
-      this.setState( {
+    if(Utils.getDocumentScrollPercentage() > .9) {
+      this.setState({
         showSpinner: true,
         fetchedEverything: false
-      } );
-      setTimeout( () => {
-        this.loadItems( Constants.INFINITE_LIST_FETCH_COUNT );
-      }, Math.max( this.nextApiFetch - Date.now(), Constants.MIN_DELAY_BETWEEN_INFINITE_LIST_FETCH ) );
+      });
+      setTimeout(() => {
+        this.loadItems(Constants.INFINITE_LIST_FETCH_COUNT);
+      }, Math.max(this.nextApiFetch - Date.now(), Constants.MIN_DELAY_BETWEEN_INFINITE_LIST_FETCH));
     } 
   }
   componentDidMount() {
-    const thisY = Utils.getElementTop( this.ref?.current );
-    const initialElementHeight = ( Utils.getViewportHeight() - thisY );
-    const initialLimit = Math.ceil( initialElementHeight / this.props.elementHeight ); 
-    this.loadItems( initialLimit );
-    window.addEventListener( 'scroll', this.handleScroll );
+    const thisY = Utils.getElementTop(this.ref?.current);
+    const initialElementHeight = (Utils.getViewportHeight() - thisY);
+    const initialLimit = Math.ceil(initialElementHeight / this.props.elementHeight); 
+    this.loadItems(initialLimit);
+    window.addEventListener('scroll', this.handleScroll);
   }
-  mapItems( items ) {
-    return items.map( item => {
+  mapItems(items, newlyCreated = false) {
+    return items.map(item => {
       return {
         item, 
-        ref: React.createRef( null ),
-        newlyCreated: false
+        ref: React.createRef(null),
+        newlyCreated
       };
-    } );
+    });
   }
-  addItems( items ) {
-    const newItems = this.mapItems( items );
-    this.setState( {
-      items: [ ...this.state.items, ...newItems ]
-    } );
+  addItem(item, newlyCreated, insertAtTop) {
+    this.addItems([item], newlyCreated, insertAtTop);
   }
-  async loadItems( count ) {
-    const items = await this.props.loadItems( count, this.dateOffset )
-      .then( items => this.mapItems( items ) )
-      .then( newItems => {
+  addItems(items, newlyCreated, insertAtTop) {
+    const newItems = this.mapItems(items, newlyCreated);
+    this.setState({
+      items: insertAtTop? [ ...newItems, ...this.state.items ] : [ ...this.state.items, ...newItems ]
+    });
+  }
+  async loadItems(count) {
+    const items = await this.props.loadItems(count, this.dateOffset)
+      .then(items => this.mapItems(items))
+      .then(newItems => {
         const { items: curItems } = this.state;
-        curItems.push( ...newItems.sort( ( b, a ) => +new Date( a.item.createdAt ) - +new Date( b.item.createdAt ) ) );
-        this.setState( {
+        curItems.push(...newItems.sort((b, a) => +new Date(a.item.createdAt) - +new Date(b.item.createdAt)));
+        this.setState({
           items: curItems,
           showSpinner: false,
           fetchedEverything: newItems.length === 0
-        } );
-        if( newItems.length ) {
-          this.dateOffset = newItems[newItems.length-1].item.createdAt;
+        });
+        if(newItems.length) {
+          const itemDateKey = this.props.itemDateKey || 'createdAt';
+          this.dateOffset = _.get(newItems[newItems.length-1].item, itemDateKey);
         }
         this.nextApiFetch = Date.now() + Constants.MAX_DELAY_BETWEEN_INFINITE_LIST_FETCH;
-      } );
+      });
+    return items;
   }
   renderItems() {
-    const itemList = this.state.items.map( ( itemData, index ) => {
+    const itemList = this.state.items.map((itemData, index) => {
+      const {itemIdKey='id'} = this.props;
       const { item, ref, newlyCreated } = itemData;
-      const delay = Math.max( 0,index-( this.renderedItemCount-1 ) ) * 50;
+      const delay = Math.max(0, index-(this.renderedItemCount-1)) * 50;
       const timeout = 500 + delay;
       const transitionDelay = `${delay}ms`;
+      const key = _.get(item, itemIdKey) || index;
       return (
-        <CSSTransition in={true} timeout={timeout} key={item.id} 
+        <CSSTransition in={true} timeout={timeout} key={key} 
           nodeRef={ref}
           classNames={{
             enter: newlyCreated? styles.itemEntering : styles.itemEntering,
@@ -89,12 +97,12 @@ class InfiniteList extends React.Component {
           }}>
           {
             <div ref={ref} style={{transitionDelay}}>
-              {this.props.renderItem( item )}
+              {this.props.renderItem(item)}
             </div>
           }
         </CSSTransition> 
       );
-    } );
+    });
     this.renderedItemCount = this.state.items.length;
     return itemList;
   }
