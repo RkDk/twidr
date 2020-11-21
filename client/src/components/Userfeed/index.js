@@ -29,16 +29,16 @@ class Userfeed extends React.Component {
   render() {
     return (
       <div className={styles.container}>
-        { !this.props.userId || this.props.userId === this.context.user.id? <PostEditor onUserCreatedPost={this.onUserCreatedPost}/> : <div></div> }
+        { !this.props.userId || this.props.userId === this.context.user.id ? <PostEditor onUserCreatedPost={this.onUserCreatedPost}/> : <div></div> }
         <InfiniteList 
           ref={this.infiniteListRef}
           containerClassname={styles.postList} 
-          loadItems={this.props.userId? this.getUserfeedPosts : this.getNewsfeedPosts} 
+          loadItems={this.props.userId ? this.getUserfeedPosts : this.getNewsfeedPosts} 
           elementHeight={150}
           itemIdKey={'post.id'}
           itemDateKey={'post.createdAt'}
           renderItem={item=>{
-            const { post, user } = item;
+            const {post, user} = item;
             return (<Post user={user} post={post}/>);
           }}
         />

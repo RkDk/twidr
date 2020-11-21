@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {
   BrowserRouter as Router,
   Switch,
@@ -6,7 +6,7 @@ import {
   Redirect
 } from 'react-router-dom';
 
-import UserContext, { defaultUser } from '../../context/UserContext';
+import UserContext from '../../context/UserContext';
 import UserManager from '../UserManager';
 
 import Dashboard from '../../pages/Dashboard';
@@ -14,30 +14,30 @@ import UserProfile from '../../pages/UserProfile';
 import Login from '../../pages/Login';
 import UnknownPage from '../../pages/UnknownPage';
 
-function PrivateComponent( props ) {
-  const userContext = useContext( UserContext );
-  const [ isComponentMounted, setComponentMounted ] = useState( false );
-  useEffect( () => {
-    userContext.fetchCurrentUser().then( () => setComponentMounted( true ) );
-  }, [] );
-  if( !isComponentMounted ) {
-    return ( <></> );
+function PrivateComponent(props) {
+  const userContext = useContext(UserContext);
+  const [isComponentMounted, setComponentMounted] = useState(false);
+  useEffect(() => {
+    userContext.fetchCurrentUser().then(() => setComponentMounted(true));
+  }, []);
+  if(!isComponentMounted) {
+    return (<></>);
   }
   return (
     <>
-      {userContext.user? (
+      {userContext.user ? (
         <>{props.children}</>
       ) : 
-        ( <Redirect to="/login"/> )
+        (<Redirect to="/login"/>)
       }
     </>
   );
 }
-function PrivateRoute( props ) {
-  const { component: Component, ...params } = props;
+function PrivateRoute(props) {
+  const {component: Component, ...params} = props;
   return (
     <Route {...params} render={
-      ( _props ) => 
+      (_props) => 
         <PrivateComponent>
           <Component {..._props}/>
         </PrivateComponent>
@@ -46,8 +46,8 @@ function PrivateRoute( props ) {
 }
 
 class App extends React.Component {
-  constructor( props ) {
-    super( props );
+  constructor(props) {
+    super(props);
   }
   render() {
     return (

@@ -1,8 +1,8 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import styles from './styles.module.scss';
 
 
-function InlineUserCard( props ) {
+function InlineUserCard(props) {
   const {user} = props;
   return (
     <div className={styles.container}>

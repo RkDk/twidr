@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './styles.module.scss';
 
-function SideMenuPanel( props ) {
+function SideMenuPanel(props) {
   return (
     <div className={styles.container}>
       { props.includeDashboardLink && <h1>Dashboard</h1> }

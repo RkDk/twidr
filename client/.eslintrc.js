@@ -4,8 +4,8 @@ module.exports = {
     es6: true
   },
   extends: [
-    "eslint:recommended",
-    "plugin:react/recommended"
+    'eslint:recommended',
+    'plugin:react/recommended'
   ],
   globals: {
     Atomics: 'readonly',
@@ -24,16 +24,19 @@ module.exports = {
   rules: {
     indent: ['error', 2],
     semi: ['error', 'always'],
-    "react/prop-types": [0],
-    "space-before-function-paren": [0],
-    "space-in-parens": ['error', 'never'],
-    "space-in-brackets": ['error', 'never'],
-    "comma-spacing": ["error", { "before": false, "after": true }],
-    'quotes': ['error', 'single']
+    'react/prop-types': [0],
+    'space-before-function-paren': [0],
+    'space-in-parens': ['error', 'never'],
+    'comma-spacing': ['error', {'before': false, 'after': true}],
+    'quotes': ['error', 'single'],
+    'object-curly-spacing': ['error', 'never'],
+    'array-bracket-spacing': ['error', 'never'],
+    'computed-property-spacing': ['error', 'never'],
+    'space-infix-ops': ['error'],
   },
   settings: {
     react: {
-      version: "detect"
+      version: 'detect'
     }
   } 
-}
+};

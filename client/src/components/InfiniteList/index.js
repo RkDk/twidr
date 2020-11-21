@@ -6,7 +6,7 @@ import {
 import Spinner from 'react-bootstrap/Spinner';
 import Constants from '../../constants';
 import Utils from '../../utils';
-import { HandThumbsUp } from 'react-bootstrap-icons';
+import {HandThumbsUp} from 'react-bootstrap-icons';
 import _ from 'lodash';
 import styles from './styles.module.scss';
   
@@ -58,14 +58,14 @@ class InfiniteList extends React.Component {
   addItems(items, newlyCreated, insertAtTop) {
     const newItems = this.mapItems(items, newlyCreated);
     this.setState({
-      items: insertAtTop? [ ...newItems, ...this.state.items ] : [ ...this.state.items, ...newItems ]
+      items: insertAtTop ? [...newItems, ...this.state.items] : [...this.state.items, ...newItems]
     });
   }
   async loadItems(count) {
     const items = await this.props.loadItems(count, this.dateOffset)
       .then(items => this.mapItems(items))
       .then(newItems => {
-        const { items: curItems } = this.state;
+        const {items: curItems} = this.state;
         curItems.push(...newItems.sort((b, a) => +new Date(a.item.createdAt) - +new Date(b.item.createdAt)));
         this.setState({
           items: curItems,
@@ -74,7 +74,7 @@ class InfiniteList extends React.Component {
         });
         if(newItems.length) {
           const itemDateKey = this.props.itemDateKey || 'createdAt';
-          this.dateOffset = _.get(newItems[newItems.length-1].item, itemDateKey);
+          this.dateOffset = _.get(newItems[newItems.length - 1].item, itemDateKey);
         }
         this.nextApiFetch = Date.now() + Constants.MAX_DELAY_BETWEEN_INFINITE_LIST_FETCH;
       });
@@ -82,9 +82,9 @@ class InfiniteList extends React.Component {
   }
   renderItems() {
     const itemList = this.state.items.map((itemData, index) => {
-      const {itemIdKey='id'} = this.props;
-      const { item, ref, newlyCreated } = itemData;
-      const delay = Math.max(0, index-(this.renderedItemCount-1)) * 50;
+      const {itemIdKey = 'id'} = this.props;
+      const {item, ref, newlyCreated} = itemData;
+      const delay = Math.max(0, index - (this.renderedItemCount - 1)) * 50;
       const timeout = 500 + delay;
       const transitionDelay = `${delay}ms`;
       const key = _.get(item, itemIdKey) || index;
@@ -92,8 +92,8 @@ class InfiniteList extends React.Component {
         <CSSTransition in={true} timeout={timeout} key={key} 
           nodeRef={ref}
           classNames={{
-            enter: newlyCreated? styles.itemEntering : styles.itemEntering,
-            enterActive: newlyCreated? styles.itemActive : styles.itemActive
+            enter: newlyCreated ? styles.itemEntering : styles.itemEntering,
+            enterActive: newlyCreated ? styles.itemActive : styles.itemActive
           }}>
           {
             <div ref={ref} style={{transitionDelay}}>
@@ -107,18 +107,18 @@ class InfiniteList extends React.Component {
     return itemList;
   }
   render() {
-    const { containerClassname } = this.props;
+    const {containerClassname} = this.props;
     return (
       <div ref={this.ref}>
         <TransitionGroup className={containerClassname}>
           {this.renderItems()}
         </TransitionGroup>
-        {this.state.showSpinner || this.state.fetchedEverything? 
+        {this.state.showSpinner || this.state.fetchedEverything ? 
           (
             <div className={styles.footer}>
               <div>
-                {this.state.showSpinner? <Spinner animation="border" /> : null}
-                {this.state.fetchedEverything? <div className={styles.thumbsUp}><HandThumbsUp/></div> : null}
+                {this.state.showSpinner ? <Spinner animation="border" /> : null}
+                {this.state.fetchedEverything ? <div className={styles.thumbsUp}><HandThumbsUp/></div> : null}
               </div>
             </div> 
           ) : null

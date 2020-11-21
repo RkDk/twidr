@@ -1,5 +1,4 @@
 import React from 'react';
-import ApiService from '../../services/ApiService';
 
 import Navbar from '../../components/Navbar';
 import ProfileBioPanel from '../../components/ProfileBioPanel';
@@ -14,8 +13,8 @@ import Utils from '../../utils';
 
 class Dashboard extends React.Component {
 
-  constructor( props ) {
-    super( props );
+  constructor(props) {
+    super(props);
   }
 
   render() {
@@ -35,7 +34,7 @@ class Dashboard extends React.Component {
           <div className={styles.mainMidCol}>
             <Userfeed/>
           </div>
-          <div className={Utils.concatStyles( styles.mainRightCol, styles.hideOnSmallScreen )}>
+          <div className={Utils.concatStyles(styles.mainRightCol, styles.hideOnSmallScreen)}>
             <TrendingPanel/>
             <RecommendedPanel/>
           </div>

@@ -2,52 +2,52 @@ import React from 'react';
 import Constants from '../../constants';
 import styles from './styles.module.scss';
 import ApiService from '../../services/ApiService';
-import { ArrowRightCircleFill, PencilSquare } from 'react-bootstrap-icons';
+import {ArrowRightCircleFill, PencilSquare} from 'react-bootstrap-icons';
 import Form from 'react-bootstrap/Form';
 import {
   CSSTransition
 } from 'react-transition-group';
 
 class PostEditor extends React.Component {
-  constructor( props ) {
-    super( props );
-    this.textAreaRef = React.createRef( null );
+  constructor(props) {
+    super(props);
+    this.textAreaRef = React.createRef(null);
     this.state = {
       showPostButton: false,
       value: ''
     };
-    this.onConfirm = this.onConfirm.bind( this );
-    this.onChange = this.onChange.bind( this );
-    this.onFocus = this.onFocus.bind( this );
-    this.onBlur = this.onBlur.bind( this );
+    this.onConfirm = this.onConfirm.bind(this);
+    this.onChange = this.onChange.bind(this);
+    this.onFocus = this.onFocus.bind(this);
+    this.onBlur = this.onBlur.bind(this);
   }
   async onConfirm() {
-    const post = await ApiService.createPost( this.state.value );
-    this.setState( {
+    const post = await ApiService.createPost(this.state.value);
+    this.setState({
       value: ''
-    } );
-    this.props.onUserCreatedPost( post );
+    });
+    this.props.onUserCreatedPost(post);
     this.textAreaRef.current.blur();
   }
-  onChange( ev ) {
-    this.setState( {
-      value: ev.target.value.substring( 0, Constants.MAX_POST_CHARACTERS )
-    } );
+  onChange(ev) {
+    this.setState({
+      value: ev.target.value.substring(0, Constants.MAX_POST_CHARACTERS)
+    });
   }
   onFocus() {
-    this.setState( {
+    this.setState({
       showPostButton: true 
-    } );
+    });
   }
   onBlur() {
-    this.setState( {
+    this.setState({
       showPostButton: false
-    } );
+    });
   }
   render() {
     return (
       <>
-        <div className={styles.overlay} style={{display:this.state.showPostButton?'block' : 'none'}}/>
+        <div className={styles.overlay} style={{display:this.state.showPostButton ? 'block' : 'none'}}/>
         <div className={styles.container}>
           <div>
             <Form.Control ref={this.textAreaRef} as="textarea" value={this.state.value} onChange={this.onChange} onFocus={this.onFocus} onBlur={this.onBlur} placeholder="What's on your mind?" rows={3} className={styles.inputTextArea}/>
