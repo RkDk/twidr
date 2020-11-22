@@ -25,6 +25,32 @@ router.get('/:userId', async(request, response, next) => {
   }
 });
 
+router.get('/:userId/following', async(request, response, next) => {
+  try {
+    const {offset = null, limit = null} = request.query;
+    const followers =
+      await UserFollower
+        .query()
+        .where({
+          followerId: request.params.userId
+        })
+        .modify(builder => {
+          builder.orderBy('createdAt', 'desc');
+          if (offset) {
+            builder.where('createdAt', '<', offset);
+          }
+          if (limit) {
+            builder.limit(limit);
+          }
+        })
+        .select('createdAt')
+        .withGraphFetched('[followee(defaultSelects)]');
+    response.status(200).json(followers);
+  } catch (err) {
+    next(err);
+  }
+});
+
 router.get('/:userId/followers', async(request, response, next) => {
   try {
     const {offset = null, limit = null} = request.query;
