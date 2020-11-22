@@ -1,6 +1,7 @@
 const {Model} = require('objection');
 const BaseModel = require('./BaseModel');
 const Image = require('./Image');
+const _ = require('lodash');
 
 class User extends BaseModel {
   static get tableName() {
@@ -9,6 +10,17 @@ class User extends BaseModel {
 
   static get idColumn() {
     return 'id';
+  }
+
+  static get virtualAttributes() {
+    return ['followingIds'];
+  }
+
+  get followingIds() {
+    if (!this.following) {
+      return null;
+    }
+    return this.following.map(v => v.id);
   }
 
   static get jsonSchema() {
@@ -30,6 +42,11 @@ class User extends BaseModel {
     return {
       defaultSelects(builder) {
         builder.select('id', 'name', 'bio', 'handle').withGraphFetched('profileImage(selectUrl)');
+      },
+      followingIds(builder) {
+        builder.withGraphFetched('following').modifyGraph('following', builder => {
+          builder.select('users.id');
+        });
       }
     };
   }
@@ -43,9 +60,26 @@ class User extends BaseModel {
           from: 'users.imageId',
           to: 'images.id'
         }
+      },
+      following: {
+        relation: Model.ManyToManyRelation,
+        modelClass: User,
+        join: {
+          from: 'users.id',
+          through: {
+            from: 'userFollowers.followerId',
+            to: 'userFollowers.followeeId'
+          },
+          to: 'users.id'
+        }
       }
     };
   };
+
+  $formatJson(json) {
+    json = super.$formatJson(json);
+    return _.pick(json, Object.keys(json).filter(key => key !== 'following'));
+  }
 };
 
 module.exports = User;
