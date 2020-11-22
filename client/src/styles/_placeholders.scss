@@ -19,3 +19,9 @@
     border-radius: $circle-image-radius;
 }
 
+%button {
+    padding: $button-padding;
+    border-radius: $button-radius;
+    color: $color-white;
+    background-color: $color-blue-3;
+}

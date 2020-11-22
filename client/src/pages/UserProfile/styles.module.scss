@@ -15,10 +15,7 @@
     font-weight: bold;
     margin-right: 1em;
     &Selected {
-        padding: .4em;
-        border-radius: 8px;
-        color: $color-white;
-        background-color: $color-blue-3;
+        @extend %button;
     }
 }
 

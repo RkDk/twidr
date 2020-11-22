@@ -35,8 +35,6 @@ class UserProfile extends React.Component {
       user: null
     };
     this.goToSubPath = this.goToSubPath.bind(this);
-    this.showFollowers = this.showFollowers.bind(this);
-    this.showFollowing = this.showFollowing.bind(this);
   }
 
   async componentDidMount() {
