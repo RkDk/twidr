@@ -13,6 +13,20 @@ import SideMenuPanel from '../../components/SideMenuPanel';
 import Userfeed from '../../components/Userfeed';
 import UsersList, {USER_LIST_TYPE_FOLLOWING, USER_LIST_TYPE_FOLLOWERS} from '../../components/UsersList';
 
+function SubNavbarButton(props) {
+  const {curSubPath = null, subPath = null, label, onNavigate} = props;
+  const pathSelected = ((!curSubPath && !subPath) || curSubPath === subPath);
+  const onClickWrapper = (e) => {
+    e.preventDefault();
+    onNavigate(`/${subPath || ''}`);
+  };
+  return (
+    <div className={Utils.concatStyles(styles.subNavbarItem, pathSelected && styles.subNavbarItemSelected)} onClick={onClickWrapper}>
+      {label}
+    </div>
+  );
+}
+
 class UserProfile extends React.Component {
 
   constructor(props) {
@@ -20,7 +34,7 @@ class UserProfile extends React.Component {
     this.state = {
       user: null
     };
-    this.showMain = this.showMain.bind(this);
+    this.goToSubPath = this.goToSubPath.bind(this);
     this.showFollowers = this.showFollowers.bind(this);
     this.showFollowing = this.showFollowing.bind(this);
   }
@@ -34,21 +48,6 @@ class UserProfile extends React.Component {
 
   goToSubPath(subPath = '') {
     this.props.history.replace({pathname: `/user/${this.state.user.id}${subPath}`});
-  }
-
-  showMain(e) {
-    e.preventDefault();
-    this.goToSubPath();
-  }
-
-  showFollowers(e) {
-    e.preventDefault();
-    this.goToSubPath('/followers');
-  }
-
-  showFollowing(e) {
-    e.preventDefault();
-    this.goToSubPath('/following');
   }
 
   getCurrentSubPath() {
@@ -88,9 +87,9 @@ class UserProfile extends React.Component {
           <div className={styles.mainMidCol}>
             <ProfileBioPanel isBanner={true} user={user}/>
             <div className={styles.subNavbar}>
-              <div className={Utils.concatStyles(styles.subNavbarItem, !subPath && styles.subNavbarItemSelected)} onClick={this.showMain}>Posts</div>
-              <div className={Utils.concatStyles(styles.subNavbarItem, subPath === 'followers' && styles.subNavbarItemSelected)} onClick={this.showFollowers}>Followers</div>
-              <div className={Utils.concatStyles(styles.subNavbarItem, subPath === 'following' && styles.subNavbarItemSelected)} onClick={this.showFollowing}>Following</div>
+              <SubNavbarButton curSubPath={subPath} label='Posts' onNavigate={this.goToSubPath}/>
+              <SubNavbarButton curSubPath={subPath} subPath='followers' label='Followers' onNavigate={this.goToSubPath}/>
+              <SubNavbarButton curSubPath={subPath} subPath='following' label='Following' onNavigate={this.goToSubPath}/>
             </div>
             {this.renderContent(subPath)}
           </div>
