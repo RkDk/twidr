@@ -11,7 +11,7 @@ module.exports = {
     ecmaVersion: 2020
   },
   rules: {
-    indent: ['error', 2],
+    indent: ['error', 2, {SwitchCase: 2}],
     semi: ['error', 'always'],
     'space-before-function-paren': [0],
     'space-in-parens': ['error', 'never'],

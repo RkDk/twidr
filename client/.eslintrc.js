@@ -22,7 +22,7 @@ module.exports = {
     'react'
   ],
   rules: {
-    indent: ['error', 2],
+    indent: ['error', 2, {SwitchCase:2}],
     semi: ['error', 'always'],
     'react/prop-types': [0],
     'space-before-function-paren': [0],

@@ -43,7 +43,7 @@ class Utils {
     return styles[root.concat(suffix)] || '';
   }
   static concatStyles(...arg) {
-    return arg.join(' ');
+    return arg.filter(v => !!v).join(' ');
   }
   static navigateTo(history, path) {
     if(history.location.pathname === path) {

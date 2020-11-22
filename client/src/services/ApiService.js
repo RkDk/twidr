@@ -39,6 +39,12 @@ class ApiService {
     });
     return axios(options).then(({data})=>data);
   }
+  static async getUsersFollowing(userId, limit, offset) {
+    const options = Utils.axiosOptions(`/users/${userId}/following?limit=${limit}${offset ? '&offset='.concat(offset) : ''}`, {
+      method: 'GET'
+    });
+    return axios(options).then(({data})=>data);
+  }
   static async getUserFollowers(userId, limit, offset) {
     const options = Utils.axiosOptions(`/users/${userId}/followers?limit=${limit}${offset ? '&offset='.concat(offset) : ''}`, {
       method: 'GET'

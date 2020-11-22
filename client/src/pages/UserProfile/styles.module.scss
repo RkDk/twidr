@@ -6,6 +6,26 @@
     grid-template-rows: max-content auto;
 }
 
+.subNavbar {
+    padding: .5em;
+}
+
+.subNavbarItem {
+    display: inline;
+    font-weight: bold;
+    margin-right: 1em;
+    &Selected {
+        padding: .4em;
+        border-radius: 8px;
+        color: $color-white;
+        background-color: $color-blue-3;
+    }
+}
+
+.subNavbarItem:hover {
+    cursor: pointer;
+}
+
 .sideMenu {
     margin-top: 3em;
 }
