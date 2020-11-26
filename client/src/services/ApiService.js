@@ -21,35 +21,49 @@ class ApiService {
     });
     return axios(options).then(({data}) => data);
   }
-  static async getNewsfeedPosts(limit, offset) {
+  static getNewsfeedPosts(limit, offset) {
     const options = Utils.axiosOptions(`/newsfeed?limit=${limit}${offset ? '&offset='.concat(offset) : ''}`, {
       method: 'GET'
     });
     return axios(options).then(({data})=> parseUserfeed(data));
   }
-  static async getUserfeedPosts(userId, limit, offset) {
+  static getUserfeedPosts(userId, limit, offset) {
     const options = Utils.axiosOptions(`/posts?userId=${userId}&limit=${limit}${offset ? '&offset='.concat(offset) : ''}`, {
       method: 'GET'
     });
     return axios(options).then(({data})=> parseUserfeed(data));
   }
-  static async getUser(userId) {
+  static getUser(userId) {
     const options = Utils.axiosOptions(`/users/${userId}`, {
       method: 'GET'
     });
     return axios(options).then(({data})=>data);
   }
-  static async getUsersFollowing(userId, limit, offset) {
+  static getUsersFollowing(userId, limit, offset) {
     const options = Utils.axiosOptions(`/users/${userId}/following?limit=${limit}${offset ? '&offset='.concat(offset) : ''}`, {
       method: 'GET'
     });
     return axios(options).then(({data})=>data);
   }
-  static async getUserFollowers(userId, limit, offset) {
+  static getUserFollowers(userId, limit, offset) {
     const options = Utils.axiosOptions(`/users/${userId}/followers?limit=${limit}${offset ? '&offset='.concat(offset) : ''}`, {
       method: 'GET'
     });
     return axios(options).then(({data})=>data);
+  }
+  static followUser(userId) {
+    const options = Utils.axiosOptions(`/users/${userId}/follow`, {
+      method: 'POST',
+      data: {}
+    });
+    return axios(options);
+  }
+  static unfollowUser(userId) {
+    const options = Utils.axiosOptions(`/users/${userId}/unfollow`, {
+      method: 'POST',
+      data: {}
+    });
+    return axios(options);
   }
   static getCurrentUser() {
     const options = Utils.axiosOptions('/user', {

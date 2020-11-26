@@ -79,18 +79,33 @@ router.get('/:userId/followers', async(request, response, next) => {
 
 router.post('/:userId/follow', async(request, response, next) => {
   try {
-    const user =
-      await User
-        .query()
-        .findById(request.params.userId);
-    if (user) {
-      await UserFollower
-        .query()
-        .insert({
-          followerId: request.activeUser.id,
-          followeeId: user.id
-        });
+    if (isNaN(+request.params.userId)) {
+      throw new Error('Invalid userId');
     }
+    await UserFollower
+      .query()
+      .insert({
+        followerId: request.activeUser.id,
+        followeeId: +request.params.userId
+      });
+    response.sendStatus(200);
+  } catch (err) {
+    next(err);
+  }
+});
+
+router.post('/:userId/unfollow', async(request, response, next) => {
+  try {
+    if (isNaN(+request.params.userId)) {
+      throw new Error('Invalid userId');
+    }
+    await UserFollower
+      .query()
+      .delete()
+      .where({
+        followerId: request.activeUser.id,
+        followeeId: +request.params.userId
+      });
     response.sendStatus(200);
   } catch (err) {
     next(err);

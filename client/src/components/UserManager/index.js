@@ -8,10 +8,14 @@ class UserManager extends React.Component {
     this.state = {
       userContext: {
         ...defaultUser,
+        updateUser: this.updateUser.bind(this),
         fetchCurrentUser: this.fetchCurrentUser.bind(this),
         logoutUser: this.logoutUser.bind(this)
       }
     };
+  }
+  updateUser(update) {
+    this.setUser(Object.assign({}, this.state.userContext?.user || {}, update));
   }
   setUser(user) {
     const {userContext} = this.state;

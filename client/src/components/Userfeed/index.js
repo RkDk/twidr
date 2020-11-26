@@ -23,7 +23,6 @@ class Userfeed extends React.Component {
     return ApiService.getNewsfeedPosts(limit, offset);
   }
   onUserCreatedPost(post) {
-    console.log(this.infiniteListRef);
     this.infiniteListRef.current.addItem(post, true, true);
   }
   render() {

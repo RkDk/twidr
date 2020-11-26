@@ -13,7 +13,7 @@ const USER_LIST_TYPE_FOLLOWING = 2;
 class UsersList extends React.Component {
   constructor(props) {
     super(props);
-    this.getFollowers = this.getFollowers.bind(this);
+    this.setType(this.props.type);
   }
   getFollowers(limit, offset) {
     return ApiService.getUserFollowers(this.props.userId, limit, offset);
@@ -21,9 +21,16 @@ class UsersList extends React.Component {
   getFollowing(limit, offset) {
     return ApiService.getUsersFollowing(this.props.userId, limit, offset);
   }
+  setType(type) {
+    this.listKey = Date.now();
+    this.type = type;
+  }
   renderContent() {
     let getUsersList, itemKey;
-    switch(this.props.type) {
+    if(this.type !== this.props.type) {
+      this.setType(this.props.type);
+    }
+    switch(this.type) {
         case USER_LIST_TYPE_FOLLOWERS:
           getUsersList = this.getFollowers.bind(this);
           itemKey = 'follower';
@@ -37,7 +44,7 @@ class UsersList extends React.Component {
     }
     return (
       <InfiniteList 
-        key={Date.now()}
+        key={this.listKey}
         containerClassname={styles.userList} 
         loadItems={getUsersList} 
         elementHeight={85}
