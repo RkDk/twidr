@@ -14,7 +14,7 @@ function ProfileBioPanel(props) {
     <div className={Utils.suffixStyle(styles, 'container', classSuffix)}>
       { targetUser.profileImage && <img className={Utils.suffixStyle(styles, 'profileImage', classSuffix)} src={targetUser.profileImage.url}/> }
       <div className={Utils.suffixStyle(styles, 'infoSection', classSuffix)}>
-        <span className={styles.link} onClick={()=>Utils.navigateTo(history, `/user/${targetUser.id}`)}>
+        <span className={styles.pointerOnHover} onClick={()=>Utils.navigateTo(history, `/user/${targetUser.id}`)}>
           <h1>{targetUser.name}</h1>
           <div className={styles.userHandle}>@{targetUser.handle}</div>
         </span>

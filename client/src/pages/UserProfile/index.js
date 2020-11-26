@@ -37,8 +37,8 @@ class UserProfile extends React.Component {
     this.goToSubPath = this.goToSubPath.bind(this);
   }
 
-  async componentDidMount() {
-    const user = await ApiService.getUser(this.props.match.params.userId);
+  async fetchUserId(userId) {
+    const user = await ApiService.getUser(userId);
     this.setState({
       user 
     });
@@ -71,8 +71,13 @@ class UserProfile extends React.Component {
 
   render() {
     const {user} = this.state;
+    const {userId} = this.props?.match?.params;
+    if(userId && +userId !== +user?.id) {
+      this.fetchUserId(userId);
+      return null;
+    }
     if(!user) {
-      return (<></>);
+      return null;
     }
     const subPath = this.getCurrentSubPath();
     return (

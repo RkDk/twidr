@@ -14,8 +14,8 @@ function _Post() {
         <div className={styles.headerRow}>
           <img className={styles.userImageDisplay} src={user.profileImage.url}/>
           <div className={styles.nameDisplay} onClick={()=>Utils.navigateTo(history, `/user/${user.id}`)}>
-            <span className={styles.link}>{user.name}</span>
-            <span className={Utils.concatStyles(styles.userHandle, styles.link)}> @{user.handle}</span>
+            <span className={styles.pointerOnHover}>{user.name}</span>
+            <span className={Utils.concatStyles(styles.userHandle, styles.pointerOnHover)}> @{user.handle}</span>
           </div>
           <div className={styles.timeDisplay}>{Utils.formatDateTime(post.createdAt)}</div>
         </div>

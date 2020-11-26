@@ -3,11 +3,17 @@ import styles from './styles.module.scss';
 import UserContext from '../../context/UserContext';
 import Button from 'react-bootstrap/Button';
 import ApiService from '../../services/ApiService';
+import {useHistory} from 'react-router-dom';
+import Utils from '../../utils';
 
 function FollowActionButton(props) {
   const {user} = props;
   const userContext = useContext(UserContext);
   const {followingIds = []} = userContext?.user;
+
+  if(user.id === userContext?.user?.id) {
+    return null;
+  }
 
   const onHandleFollow = async () => {
     await ApiService.followUser(user.id);
@@ -27,13 +33,17 @@ function FollowActionButton(props) {
 
 function InlineUserCard(props) {
   const {user} = props;
+  const history = useHistory();
   if(!user) {
     return null;
   }
+  const navigateToUser = () => {
+    Utils.navigateTo(history, `/user/${user.id}`);
+  };
   return (
     <div className={styles.container}>
-      <div>{ user.profileImage && <img className={styles.profileImage} src={user.profileImage.url}/> }</div>
-      <div>{ user.name }</div>
+      <div className={styles.pointerOnHover} onClick={navigateToUser}>{ user.profileImage && <img className={styles.profileImage} src={user.profileImage.url}/> }</div>
+      <div className={styles.pointerOnHover} onClick={navigateToUser}>{ user.name }</div>
       <FollowActionButton user={user}/>
     </div>
   );

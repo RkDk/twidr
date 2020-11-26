@@ -31,10 +31,6 @@ h4 {
     z-index: 100;
 }
 
-.link {
-    cursor: pointer;
-}
-
 .mainThreeColumn {
     display: grid;
     grid-template-rows: 100%;
@@ -77,4 +73,8 @@ h4 {
     border-radius: 8px;
     color: $color-white;
     background-color: $color-blue-3;
+}
+
+.pointerOnHover:hover {
+    cursor: pointer;
 }
