@@ -17,6 +17,6 @@ docker ps -a | grep redis &> /dev/null
 if [ $? -ne 0 ]; then
     echo "Starting redis";
     docker pull redis;
-    docker run --name twidr-redis -d redis;
+    docker run --name twidr-redis -p 6379:6379 -d redislabs/rejson:latest;
 fi
 
