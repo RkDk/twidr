@@ -30,11 +30,11 @@ async function getUsers(ids) {
   const users = await CacheService.getJsonMultiple(ids.map(v => `user:${v}`));
   const cacheMisses = users.map((v, index) => v ? null : ids[index]).filter(v => !!v);
   const loadedUsers = !cacheMisses.length ? []
-    : await User.query().whereIn('id', cacheMisses).modify('defaultSelects').then(rows => {
-      return cacheMisses.map(id => {
-        return rows.find(v => +v.id === +id);
-      });
-    });
+    : await User
+      .query()
+      .joinRaw(`JOIN unnest('{${ids.join(',')}}'::int[]) WITH ORDINALITY t(id, ord) USING (id)`)
+      .orderByRaw('t.ord')
+      .modify('defaultSelects');
   for (const user of loadedUsers) {
     await CacheService.setJson(`user:${user.id}`, user);
   }
