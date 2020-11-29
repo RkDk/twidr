@@ -1,3 +1,4 @@
+const debug = require('debug')('twidr:user-cache');
 const CacheService = require('./CacheService');
 const UserFollower = require('../models/UserFollower');
 const User = require('../models/User');
@@ -44,10 +45,12 @@ async function fetchUserFollows(userId, followType, dateOffset, limit) {
 async function getFollowsWithType(userId, followType, dateOffset, limit, getUsers) {
   const key = getUserFollowKey(userId, followType);
   if (!await CacheService.keyExists(key)) {
+    debug(`User follows cache-miss for ${key}`);
     const {nextOffset, userIds} = await fetchUserFollows(userId, followType, dateOffset, limit);
     const users = await getUsers(userIds);
     return {nextOffset, users};
   } else {
+    debug(`Fetching user follows from cache for ${key}`);
     const followingIds = await CacheService.getReverseSortedSetByRangeScore(key, `(${dateOffset}`, null, limit, true);
     const nextOffset = followingIds[followingIds.length - 1];
     const userIds = [];
@@ -67,13 +70,15 @@ class UserCacheService {
   async getUsers(ids) {
     const users = await CacheService.getJsonMultiple(ids.map(id => `user:${id}`));
     const cacheMisses = users.map((user, index) => user ? null : ids[index]).filter(v => !!v);
+    debug(`Querying for ${ids.length} users with ${cacheMisses.length} cache-misses`);
     const loadedUsers = !cacheMisses.length ? []
       : await User
         .query()
-        .joinRaw(`JOIN unnest('{${ids.join(',')}}'::int[]) WITH ORDINALITY t(id, ord) USING (id)`)
+        .joinRaw(`JOIN unnest('{${cacheMisses.join(',')}}'::int[]) WITH ORDINALITY t(id, ord) USING (id)`)
         .orderByRaw('t.ord')
         .modify('defaultSelects');
     for (const user of loadedUsers) {
+      debug('Filling user cache-miss for ', user.id);
       await CacheService.setJson(`user:${user.id}`, user);
     }
     return users.map(user => {
