@@ -26,18 +26,16 @@ class UsersList extends React.Component {
     this.type = type;
   }
   renderContent() {
-    let getUsersList, itemKey;
+    let getUsersList;
     if(this.type !== this.props.type) {
       this.setType(this.props.type);
     }
     switch(this.type) {
         case USER_LIST_TYPE_FOLLOWERS:
           getUsersList = this.getFollowers.bind(this);
-          itemKey = 'follower';
           break;
         case USER_LIST_TYPE_FOLLOWING:
           getUsersList = this.getFollowing.bind(this);
-          itemKey = 'followee';
           break;
         default:
           return null;
@@ -49,7 +47,7 @@ class UsersList extends React.Component {
         loadItems={getUsersList} 
         elementHeight={85}
         renderItem={item=>{
-          return (<InlineUserCard user={item[itemKey]}/>);
+          return (<InlineUserCard user={item}/>);
         }}
       />
     );

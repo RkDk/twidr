@@ -63,6 +63,13 @@ class InfiniteList extends React.Component {
   }
   async loadItems(count) {
     const items = await this.props.loadItems(count, this.dateOffset)
+      .then(data => {
+        const {nextOffset, items} = data;
+        if(items.length) {
+          this.dateOffset = nextOffset;
+        }
+        return items;
+      })
       .then(items => this.mapItems(items))
       .then(newItems => {
         const {items: curItems} = this.state;
@@ -72,10 +79,6 @@ class InfiniteList extends React.Component {
           showSpinner: false,
           fetchedEverything: newItems.length === 0
         });
-        if(newItems.length) {
-          const itemDateKey = this.props.itemDateKey || 'createdAt';
-          this.dateOffset = _.get(newItems[newItems.length - 1].item, itemDateKey);
-        }
         this.nextApiFetch = Date.now() + Constants.MAX_DELAY_BETWEEN_INFINITE_LIST_FETCH;
       });
     return items;
