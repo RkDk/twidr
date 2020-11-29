@@ -32,7 +32,8 @@ module.exports = (server) => {
   });
   server.use((err, request, response, next) => {
     if (err) {
-      debug(`An error was encountered: ${err.stack}`);
+      debug('An error was encountered:');
+      debug(err);
     }
     response.sendStatus(500);
   });

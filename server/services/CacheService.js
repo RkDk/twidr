@@ -5,6 +5,25 @@ const util = require('util');
 
 rejson(redis);
 
+class RedisError extends Error {
+  constructor(error) {
+    super(error);
+    this.name = 'Redis Error';
+    this.message = `\n${error.stack} \n\nParams: ${JSON.stringify(error)}`;
+  }
+}
+
+function onRedisError(err) {
+  throw new RedisError(err);
+}
+
+function promisify(o, fn) {
+  const pfn = util.promisify(o[fn]).bind(o);
+  return (...args) => {
+    return pfn(...args).catch(onRedisError);
+  };
+}
+
 function createClient() {
   const client = redis.createClient();
   client.on('ready', () => {
@@ -23,22 +42,22 @@ class CacheService {
   constructor() {
     this.client = createClient();
 
-    this.sadd = util.promisify(this.client.sadd).bind(this.client);
-    this.scard = util.promisify(this.client.scard).bind(this.client);
-    this.exists = util.promisify(this.client.exists).bind(this.client);
-    this.get = util.promisify(this.client.get).bind(this.client);
-    this.set = util.promisify(this.client.set).bind(this.client);
-    this.smembers = util.promisify(this.client.smembers).bind(this.client);
-    this.json_mget = util.promisify(this.client.json_mget).bind(this.client);
-    this.json_set = util.promisify(this.client.json_set).bind(this.client);
-    this.json_get = util.promisify(this.client.json_get).bind(this.client);
-    this.zadd = util.promisify(this.client.zadd).bind(this.client);
-    this.zcard = util.promisify(this.client.zcard).bind(this.client);
-    this.zrevrange = util.promisify(this.client.zrevrange).bind(this.client);
-    this.zrevrangebyscore = util.promisify(this.client.zrevrangebyscore).bind(this.client);
-    this.zrange = util.promisify(this.client.zrange).bind(this.client);
-    this.zrangebyscore = util.promisify(this.client.zrangebyscore).bind(this.client);
-    this.zscore = util.promisify(this.client.zscore).bind(this.client);
+    this.sadd = promisify(this.client, 'sadd');
+    this.scard = promisify(this.client, 'scard');
+    this.exists = promisify(this.client, 'exists');
+    this.get = promisify(this.client, 'get');
+    this.set = promisify(this.client, 'set');
+    this.smembers = promisify(this.client, 'smembers');
+    this.json_mget = promisify(this.client, 'json_mget');
+    this.json_set = promisify(this.client, 'json_set');
+    this.json_get = promisify(this.client, 'json_get');
+    this.zadd = promisify(this.client, 'zadd');
+    this.zcard = promisify(this.client, 'zcard');
+    this.zrevrange = promisify(this.client, 'zrevrange');
+    this.zrevrangebyscore = promisify(this.client, 'zrevrangebyscore');
+    this.zrange = promisify(this.client, 'zrange');
+    this.zrangebyscore = promisify(this.client, 'zrangebyscore');
+    this.zscore = promisify(this.client, 'zscore');
   }
 
   keyExists(key) {
