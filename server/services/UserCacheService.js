@@ -64,7 +64,23 @@ async function getFollowsWithType(userId, followType, dateOffset, limit, getUser
 
 class UserCacheService {
   async getUser(id) {
-    return this.getUsers([id]);
+    const [user] = await this.getUsers([id]) || [];
+    return user;
+  }
+
+  async addFollower(userId, followerId) {
+    const followeeKey = getUserFollowKey(userId, USER_FOLLOWERS);
+    const followerKey = getUserFollowKey(followerId, USER_FOLLOWINGS);
+    const now = Date.now();
+    await CacheService.addSortedSetValues(followeeKey, [now, followerId]);
+    await CacheService.addSortedSetValues(followerKey, [now, userId]);
+  }
+
+  async removeFollower(userId, followerId) {
+    const followeeKey = getUserFollowKey(userId, USER_FOLLOWERS);
+    const followerKey = getUserFollowKey(followerId, USER_FOLLOWINGS);
+    await CacheService.removeSortedSetValues(followeeKey, [followerId]);
+    await CacheService.removeSortedSetValues(followerKey, [userId]);
   }
 
   async getUsers(ids) {
@@ -84,6 +100,11 @@ class UserCacheService {
     return users.map(user => {
       return user || loadedUsers.shift();
     });
+  }
+
+  async getAllFollowingIds(userId) {
+    const results = await CacheService.getSortedSetValues(getUserFollowKey(userId, USER_FOLLOWINGS));
+    return results.filter((_, index) => index % 2 === 0);
   }
 
   async getFollowings(userId, dateOffset, limit) {

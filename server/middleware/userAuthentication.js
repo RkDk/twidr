@@ -30,7 +30,7 @@ module.exports = async(request, response, next) => {
     debug(`Authenticated request: ${request.method} ${request.path}`);
     next();
   } catch (err) {
-    debug(err.toString());
+    debug(err);
     return response.sendStatus(401);
   }
 };

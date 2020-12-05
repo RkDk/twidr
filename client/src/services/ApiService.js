@@ -3,12 +3,15 @@ import Utils from '../utils';
 
 function parseUserfeed(data) {
   const {users, posts} = data;
-  return posts.map(post => {
+  let nextOffset;
+  const items = posts.map(post => {
+    nextOffset = post.createdAt;
     return {
       user: users.find(({id}) => id === post.userId),
       post
     };
   });
+  return {nextOffset, items};
 }
 
 class ApiService {

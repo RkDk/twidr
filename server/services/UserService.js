@@ -1,9 +1,11 @@
 const User = require('../models/User');
+const UserCacheService = require('./UserCacheService');
 
 class UserService {
-  authenticateSession(userId, sessionCode) {
-    const user = User.query().findById(userId).modify('defaultSelects').modify('followingIds');
-    return user;
+  async authenticateSession(userId, sessionCode) {
+    const user = await UserCacheService.getUser(userId);
+    const followingIds = await UserCacheService.getAllFollowingIds(userId);
+    return {...user, followingIds};
   }
 }
 

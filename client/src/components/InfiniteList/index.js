@@ -40,8 +40,11 @@ class InfiniteList extends React.Component {
     const thisY = Utils.getElementTop(this.ref?.current);
     const initialElementHeight = (Utils.getViewportHeight() - thisY);
     const initialLimit = Math.ceil(initialElementHeight / this.props.elementHeight); 
-    this.loadItems(initialLimit);
+    this.loadItems(Math.max(1, initialLimit));
     window.addEventListener('scroll', this.handleScroll);
+  }
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.handleScroll);
   }
   mapItems(items, newlyCreated = false) {
     return items.map(item => {

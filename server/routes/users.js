@@ -16,11 +16,10 @@ router.get('/', async(request, response, next) => {
 
 router.get('/:userId', async(request, response, next) => {
   try {
-    const user =
-      await User
-        .query()
-        .findById(request.params.userId)
-        .modify('defaultSelects');
+    if (isNaN(+request.params.userId)) {
+      throw new Error('Invalid userId');
+    }
+    const user = await UserCacheService.getUser(request.params.userId);
     response.status(200).json(user);
   } catch (err) {
     next(err);
@@ -66,6 +65,7 @@ router.post('/:userId/follow', async(request, response, next) => {
         followerId: request.activeUser.id,
         followeeId: +request.params.userId
       });
+    await UserCacheService.addFollower(request.params.userId, request.activeUser.id);
     response.sendStatus(200);
   } catch (err) {
     next(err);
@@ -84,6 +84,7 @@ router.post('/:userId/unfollow', async(request, response, next) => {
         followerId: request.activeUser.id,
         followeeId: +request.params.userId
       });
+    await UserCacheService.removeFollower(request.params.userId, request.activeUser.id);
     response.sendStatus(200);
   } catch (err) {
     next(err);

@@ -52,11 +52,13 @@ class CacheService {
     this.json_set = promisify(this.client, 'json_set');
     this.json_get = promisify(this.client, 'json_get');
     this.zadd = promisify(this.client, 'zadd');
+    this.zrem = promisify(this.client, 'zrem');
     this.zcard = promisify(this.client, 'zcard');
     this.zrevrange = promisify(this.client, 'zrevrange');
     this.zrevrangebyscore = promisify(this.client, 'zrevrangebyscore');
     this.zrange = promisify(this.client, 'zrange');
     this.zrangebyscore = promisify(this.client, 'zrangebyscore');
+    this.zscan = promisify(this.client, 'zscan');
     this.zscore = promisify(this.client, 'zscore');
   }
 
@@ -99,6 +101,14 @@ class CacheService {
 
   addSortedSetValues(key, values) {
     return this.zadd(key, ...values);
+  }
+
+  removeSortedSetValues(key, values) {
+    return this.zrem(key, ...values);
+  }
+
+  getSortedSetValues(key) {
+    return this.zscan(key, 0).then(v => v.pop());
   }
 
   getSortedSetLength(key) {
