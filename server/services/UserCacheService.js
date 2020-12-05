@@ -2,6 +2,7 @@ const debug = require('debug')('twidr:user-cache');
 const CacheService = require('./CacheService');
 const UserFollower = require('../models/UserFollower');
 const User = require('../models/User');
+const utils = require('../utils');
 
 const USER_FOLLOWERS = 1;
 const USER_FOLLOWINGS = 2;
@@ -28,10 +29,10 @@ async function fetchUserFollows(userId, followType, dateOffset, limit) {
       const cacheValues = [];
       const userIds = [];
       rows.forEach((row, index) => {
-        const timestamp = +Date.parse(row.createdAt);
+        const timestamp = +utils.getUnixTime(row.createdAt);
         cacheValues[index * 2] = timestamp;
         cacheValues[index * 2 + 1] = row[selectKey];
-        if (timestamp < dateOffset && limit-- > 0) {
+        if (!dateOffset || (timestamp < dateOffset && limit-- > 0)) {
           nextOffset = timestamp;
           userIds.push(row[selectKey]);
         }
@@ -103,7 +104,13 @@ class UserCacheService {
   }
 
   async getAllFollowingIds(userId) {
-    const results = await CacheService.getSortedSetValues(getUserFollowKey(userId, USER_FOLLOWINGS));
+    const key = getUserFollowKey(userId, USER_FOLLOWINGS);
+    if (!await CacheService.keyExists(key)) {
+      debug(`User follows cache-miss for ${key}`);
+      const {userIds} = await fetchUserFollows(userId, USER_FOLLOWINGS);
+      return userIds;
+    }
+    const results = await CacheService.getSortedSetValues(key);
     return results.filter((_, index) => index % 2 === 0);
   }
 
