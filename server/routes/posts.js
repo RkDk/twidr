@@ -1,28 +1,19 @@
 const express = require('express');
 const Post = require('../models/Post');
+const Utils = require('../utils');
+const UserCacheService = require('../services/UserCacheService');
 const router = express.Router();
 
 router.get('/', async(request, response, next) => {
   try {
-    const {userId = null, offset = null, limit = null} = request.query;
-    const posts =
-      await Post
-        .query()
-        .where({
-          userId: userId || request.activeUser.id
-        })
-        .modify(builder => {
-          builder.orderBy('createdAt', 'desc');
-          if (offset) {
-            builder.where('createdAt', '<', offset);
-          }
-          if (limit) {
-            builder.limit(limit);
-          }
-        })
-        .modify('defaultSelects')
-        .modify('aggregateUsers');
-    response.status(200).json(posts);
+    const {userId, offset, limit = 10} = request.query;
+    const dateOffset = Utils.getUnixTime(offset);
+    if (isNaN(dateOffset)) {
+      throw new Error('offset is invalid');
+    }
+    const {nextOffset, posts} = await UserCacheService.getUserPosts(userId, dateOffset, limit);
+    const users = await UserCacheService.getUsers([...new Set(posts.map(v => v.userId))]);
+    response.status(200).json({nextOffset, items: [users, posts]});
   } catch (err) {
     next(err);
   }

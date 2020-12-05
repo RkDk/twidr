@@ -1,4 +1,3 @@
-const User = require('../models/User');
 const UserCacheService = require('./UserCacheService');
 
 class UserService {

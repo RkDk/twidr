@@ -3,6 +3,8 @@ const CacheService = require('./CacheService');
 const UserFollower = require('../models/UserFollower');
 const User = require('../models/User');
 const utils = require('../utils');
+const Post = require('../models/Post');
+const PostCacheService = require('./PostCacheService');
 
 const USER_FOLLOWERS = 1;
 const USER_FOLLOWINGS = 2;
@@ -10,6 +12,10 @@ const USER_FOLLOWINGS = 2;
 function getUserFollowKey(userId, followType) {
   const field = followType === USER_FOLLOWERS ? 'follower' : 'following';
   return `user:${userId}:${field}:ids`;
+}
+
+function getUserPostKey(userId) {
+  return `user:${userId}:post:ids`;
 }
 
 async function fetchUserFollows(userId, followType, dateOffset, limit) {
@@ -37,7 +43,9 @@ async function fetchUserFollows(userId, followType, dateOffset, limit) {
           userIds.push(row[selectKey]);
         }
       });
-      await CacheService.addSortedSetValues(getUserFollowKey(userId, followType), cacheValues);
+      if (cacheValues.length) {
+        await CacheService.addSortedSetValues(getUserFollowKey(userId, followType), cacheValues);
+      }
       return userIds;
     });
   return {nextOffset, userIds};
@@ -112,6 +120,48 @@ class UserCacheService {
     }
     const results = await CacheService.getSortedSetValues(key);
     return results.filter((_, index) => index % 2 === 0);
+  }
+
+  async getUserPosts(userId, dateOffset, limit) {
+    const key = getUserPostKey(userId);
+    if (!await CacheService.keyExists(key)) {
+      let nextOffset;
+      const posts = await Post.query()
+        .where({
+          userId
+        })
+        .modify(builder => {
+          builder.orderBy('createdAt', 'desc');
+        })
+        .modify('defaultSelectsWithoutUser')
+        .then(async rows => {
+          const cacheValues = [];
+          const postIds = [];
+          rows.forEach((row, index) => {
+            const timestamp = +utils.getUnixTime(row.createdAt);
+            cacheValues[index * 2] = timestamp;
+            cacheValues[index * 2 + 1] = row.id;
+            if (!dateOffset || (timestamp < dateOffset && limit-- > 0)) {
+              nextOffset = timestamp;
+              postIds.push(row.id);
+            }
+          });
+          if (cacheValues.length) {
+            await CacheService.addSortedSetValues(key, cacheValues);
+          }
+          return PostCacheService.getPosts(postIds);
+        });
+      return {nextOffset, posts};
+    } else {
+      const results = await CacheService.getReverseSortedSetByRangeScore(key, `(${dateOffset}`, null, limit, true);
+      const nextOffset = results[results.length - 1];
+      const postIds = [];
+      for (let i = 0; i < results.length; i += 2) {
+        postIds.push(results[i]);
+      }
+      const posts = await PostCacheService.getPosts(postIds);
+      return {nextOffset, posts};
+    }
   }
 
   async getFollowings(userId, dateOffset, limit) {

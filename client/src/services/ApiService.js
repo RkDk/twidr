@@ -2,10 +2,8 @@ import axios from 'axios';
 import Utils from '../utils';
 
 function parseUserfeed(data) {
-  const {users, posts} = data;
-  let nextOffset;
+  const {nextOffset, items: [users, posts]} = data;
   const items = posts.map(post => {
-    nextOffset = post.createdAt;
     return {
       user: users.find(({id}) => id === post.userId),
       post

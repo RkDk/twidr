@@ -34,6 +34,15 @@ class Post extends BaseModel {
           .select('id', 'content', 'createdAt', 'userId')
           .withGraphFetched('[user(defaultSelects),metrics(defaultSelects)]');
       },
+      defaultSelectsWithoutUserAndMetrics(builder) {
+        builder
+          .select('id', 'content', 'createdAt', 'userId');
+      },
+      defaultSelectsWithoutUser(builder) {
+        builder
+          .select('id', 'content', 'createdAt', 'userId')
+          .withGraphFetched('metrics(defaultSelects)');
+      },
       aggregateUsers(builder) {
         builder.runAfter(response => {
           if (!Array.isArray(response)) {
