@@ -133,7 +133,7 @@ class UserCacheService {
         .modify(builder => {
           builder.orderBy('createdAt', 'desc');
         })
-        .modify('defaultSelectsWithoutUser')
+        .modify('defaultSelectsWithoutUserAndMetrics')
         .then(async rows => {
           const cacheValues = [];
           const postIds = [];
