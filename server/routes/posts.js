@@ -2,6 +2,7 @@ const express = require('express');
 const Post = require('../models/Post');
 const Utils = require('../utils');
 const UserCacheService = require('../services/UserCacheService');
+const PostCacheService = require('../services/PostCacheService');
 const router = express.Router();
 
 router.get('/', async(request, response, next) => {
@@ -14,6 +15,17 @@ router.get('/', async(request, response, next) => {
     const {nextOffset, posts} = await UserCacheService.getUserPosts(userId, dateOffset, limit);
     const users = await UserCacheService.getUsers([...new Set(posts.map(v => v.userId))]);
     response.status(200).json({nextOffset, items: [users, posts]});
+  } catch (err) {
+    next(err);
+  }
+});
+
+router.get('/:postId', async(request, response, next) => {
+  try {
+    const {postId} = request.params;
+    const post = await PostCacheService.getPost(postId);
+    const user = await UserCacheService.getUser(post.userId);
+    response.status(200).json({user, post});
   } catch (err) {
     next(err);
   }
@@ -34,6 +46,7 @@ router.post('/', async(request, response, next) => {
         })
         .modify('defaultSelects')
         .modify('aggregateUsers');
+    await UserCacheService.addUserPost(id, post.post);
     response.status(200).json(post);
   } catch (err) {
     next(err);

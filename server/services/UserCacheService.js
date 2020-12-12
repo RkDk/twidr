@@ -73,8 +73,7 @@ async function getFollowsWithType(userId, followType, dateOffset, limit, getUser
 
 class UserCacheService {
   async getUser(id) {
-    const [user] = await this.getUsers([id]) || [];
-    return user;
+    return (await this.getUsers([id])).pop();
   }
 
   async addFollower(userId, followerId) {
@@ -120,6 +119,13 @@ class UserCacheService {
     }
     const results = await CacheService.getSortedSetValues(key);
     return results.filter((_, index) => index % 2 === 0);
+  }
+
+  async addUserPost(userId, post) {
+    const key = getUserPostKey(userId);
+    const now = Date.now();
+    await CacheService.addSortedSetValues(key, [now, post.id]);
+    await PostCacheService.setPost(post);
   }
 
   async getUserPosts(userId, dateOffset, limit) {

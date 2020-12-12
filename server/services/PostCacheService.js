@@ -2,6 +2,7 @@ const debug = require('debug')('twidr:post-cache');
 const CacheService = require('./CacheService');
 const Post = require('../models/Post');
 const PostMetric = require('../models/PostMetric');
+const _ = require('lodash');
 
 function getPostKey(id) {
   return `post:${id}`;
@@ -26,6 +27,24 @@ class PostCacheService {
       return metrics;
     }
     return await CacheService.getJson(key);
+  }
+
+  async setPostMetrics(postId, metrics) {
+    const key = getPostMetricsKey(postId);
+    await CacheService.setJson(key, metrics);
+  }
+
+  async setPost(post) {
+    const {id, metrics} = post;
+    const key = getPostKey(id);
+    if (metrics) {
+      await this.setPostMetrics(id, metrics);
+    }
+    await CacheService.setJson(key, _.pick(post, Object.keys(post).filter(v => v !== 'metrics')));
+  }
+
+  async getPost(id) {
+    return (await this.getPosts([id])).pop();
   }
 
   async getPosts(ids) {
