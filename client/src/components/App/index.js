@@ -54,15 +54,19 @@ class App extends React.Component {
     return (
       <Router>
         <Switch>
-          <UserManager>
-            <PrivateRoute exact path="/" component={Dashboard}/>
-            <PrivateRoute path="/user/:userId" exact component={UserProfile}/>
-            <PrivateRoute path="/user/:userId/post/:postId" exact component={UserPost}/>
-          </UserManager>
           <Route path="/login">
             <Login/>
           </Route>
-          <UnknownPage/>
+          <UserManager>
+            <Switch>
+              <PrivateRoute exact path="/" component={Dashboard}/>
+              <PrivateRoute exact path="/user/:userId" component={UserProfile}/>
+              <PrivateRoute exact path="/user/:userId/followers" component={UserProfile}/>
+              <PrivateRoute exact path="/user/:userId/following" component={UserProfile}/>
+              <PrivateRoute exact path="/user/:userId/post/:postId" component={UserPost}/>
+              <UnknownPage/>
+            </Switch>
+          </UserManager>
         </Switch>
       </Router>
     );

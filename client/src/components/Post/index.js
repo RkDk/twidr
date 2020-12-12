@@ -32,7 +32,7 @@ function _Post() {
         <div ref={this.ref} className={styles.container} style={style} onClick={this.navigateToPath}>
           <div className={styles.headerRow}>
             <img className={Utils.concatStyles(styles.userImageDisplay, styles.pointerOnHover)}  data-path={`/user/${user.id}`}  src={user.profileImage.url}/>
-            <div className={Utils.concatStyles(styles.nameDisplay, styles.pointerOnHover)} data-path={`/user/${user.id}`}>
+            <div className={styles.nameDisplay}>
               <span className={styles.pointerOnHover} data-path={`/user/${user.id}`}>{user.name}</span>
               <span className={Utils.concatStyles(styles.userHandle, styles.pointerOnHover)} data-path={`/user/${user.id}`}> @{user.handle}</span>
             </div>
