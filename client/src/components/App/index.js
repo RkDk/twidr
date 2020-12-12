@@ -11,6 +11,7 @@ import UserManager from '../UserManager';
 
 import Dashboard from '../../pages/Dashboard';
 import UserProfile from '../../pages/UserProfile';
+import UserPost from '../../pages/UserPost';
 import Login from '../../pages/Login';
 import UnknownPage from '../../pages/UnknownPage';
 
@@ -55,7 +56,8 @@ class App extends React.Component {
         <Switch>
           <UserManager>
             <PrivateRoute exact path="/" component={Dashboard}/>
-            <PrivateRoute path="/user/:userId" component={UserProfile}/>
+            <PrivateRoute path="/user/:userId" exact component={UserProfile}/>
+            <PrivateRoute path="/user/:userId/post/:postId" exact component={UserPost}/>
           </UserManager>
           <Route path="/login">
             <Login/>

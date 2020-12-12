@@ -22,6 +22,12 @@ class ApiService {
     });
     return axios(options).then(({data}) => data);
   }
+  static getUserPost(postId) {
+    const options = Utils.axiosOptions(`/posts/${postId}`, {
+      method: 'GET'
+    });
+    return axios(options).then(({data})=>data);
+  }
   static getNewsfeedPosts(limit, offset) {
     const options = Utils.axiosOptions(`/newsfeed?limit=${limit}${offset ? '&offset='.concat(offset) : ''}`, {
       method: 'GET'

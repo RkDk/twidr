@@ -1,0 +1,28 @@
+@import '../../styles/main';
+
+.container {
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: max-content auto;
+}
+
+.subNavbar {
+    padding: .5em;
+}
+
+.subNavbarItem {
+    display: inline;
+    font-weight: bold;
+    margin-right: 1em;
+    &Selected {
+        @extend %button;
+    }
+}
+
+.subNavbarItem:hover {
+    cursor: pointer;
+}
+
+.sideMenu {
+    margin-top: 3em;
+}
