@@ -1,6 +1,6 @@
 # twidr
 
-An (incomplete) twitter clone, written with React and node.js, with Postgres as the DB and redis as the caching solution.  
+An (incomplete) twitter clone, written with React and node.js, with Postgres as the DB and redis as the caching solution.  Has some bash/node.js scripts for bootstrapping.
 
 ### Main dashboard
 ![Screenshot 1](/screenshots/screen1.png)
