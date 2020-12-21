@@ -19,6 +19,7 @@ class Post extends BaseModel {
       required: ['userId', 'content'],
       properties: {
         id: {type: 'integer', readOnly: true},
+        replyTo: {type: 'integer'},
         userId: {type: 'integer'},
         content: {type: 'string', minLength: 1, maxLength: 255},
         createdAt: {type: 'timestamp', readOnly: true},
@@ -32,16 +33,22 @@ class Post extends BaseModel {
       defaultSelects(builder) {
         builder
           .select('id', 'content', 'createdAt', 'userId')
-          .withGraphFetched('[user(defaultSelects),metrics(defaultSelects)]');
+          .withGraphFetched('[user(defaultSelects),metrics(defaultSelects),replyToPost(defaultSelects),replies(defaultSelectsWithoutReplyTo)]');
+      },
+      defaultSelectsWithoutReplyTo(builder) {
+        builder
+          .select('id', 'content', 'createdAt', 'userId')
+          .withGraphFetched('[user(defaultSelects),metrics(defaultSelects),replies(defaultSelectsWithoutReplyTo)]');
       },
       defaultSelectsWithoutUserAndMetrics(builder) {
         builder
-          .select('id', 'content', 'createdAt', 'userId');
+          .select('id', 'content', 'createdAt', 'userId')
+          .withGraphFetched('[replyToPost(defaultSelects),replies(defaultSelectsWithoutReplyTo)]');
       },
       defaultSelectsWithoutUser(builder) {
         builder
           .select('id', 'content', 'createdAt', 'userId')
-          .withGraphFetched('metrics(defaultSelects)');
+          .withGraphFetched('[metrics(defaultSelects),replyToPost(defaultSelects),replies(defaultSelectsWithoutReplyTo)]');
       },
       aggregateUsers(builder) {
         builder.runAfter(response => {
@@ -63,6 +70,14 @@ class Post extends BaseModel {
 
   static get relationMappings() {
     return {
+      replyToPost: {
+        relation: Model.BelongsToOneRelation,
+        modelClass: Post,
+        join: {
+          from: 'posts.replyTo',
+          to: 'posts.id'
+        }
+      },
       user: {
         relation: Model.BelongsToOneRelation,
         modelClass: User,
@@ -77,6 +92,14 @@ class Post extends BaseModel {
         join: {
           from: 'postMetrics.postId',
           to: 'posts.id'
+        }
+      },
+      replies: {
+        relation: Model.HasManyRelation,
+        modelClass: Post,
+        join: {
+          from: 'posts.id',
+          to: 'posts.replyTo'
         }
       }
     };

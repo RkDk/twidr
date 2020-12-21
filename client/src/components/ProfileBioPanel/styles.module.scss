@@ -20,13 +20,13 @@
     @extend %round-image;
     &Panel {
         @extend .profileImage;
-        max-width: $panel-profile-max-width;
-        max-height: $panel-profile-max-height;
+        width: $panel-profile-max-width;
+        height: $panel-profile-max-height;
     }
     &Banner {
         @extend .profileImage;
-        max-width: 100px;
-        max-height: 100px;
+        width: 100px;
+        height: 100px;
     }
 }
 

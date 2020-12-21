@@ -28,7 +28,7 @@ router.get('/', async(request, response, next) => {
 
     const posts = await PostCacheService.getPosts(results.map(v => v.id));
     const users = await UserCacheService.getUsers([...new Set(results.map(v => v.userId))]);
-    const nextOffset = Utils.getUnixTime(posts[posts.length - 1].createdAt);
+    const nextOffset = posts.length ? Utils.getUnixTime(posts[posts.length - 1].createdAt) : null;
     response.status(200).json({nextOffset, items: [users, posts]});
   } catch (err) {
     next(err);

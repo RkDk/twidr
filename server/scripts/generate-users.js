@@ -1,4 +1,5 @@
 async function generateUsers(n) {
+  const {RandomPicture} = require('random-picture');
   const faker = require('faker');
   const Knex = require('knex');
   const knexConfig = require('../knexfile');
@@ -6,13 +7,14 @@ async function generateUsers(n) {
   try {
     const userIds = await knex('users').select('id').then(users => users.map(user => user.id));
     for (let i = 0; i < n; i++) {
+      const image = await RandomPicture();
       const firstName = faker.name.firstName();
       const lastName = faker.name.lastName();
 
       const name = `${firstName} ${lastName}`;
       const handle = faker.internet.userName();
       const bio = faker.lorem.sentence();
-      const profileImage = faker.internet.avatar();
+      const profileImage = image.url;
       const createdAt = faker.date.past();
 
       const [imageId] =
